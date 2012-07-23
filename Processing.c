@@ -86,7 +86,7 @@ void Process_B(void)
 	
 	fBuf[0]=fInp_1;			//neuen Wert aus ADC laden
 	if(ic<4095){			//c max 4095
-		ic++;			//Buffer load erhöhen, falls nicht schon voll
+		ic++;				//Buffer load erhöhen, falls nicht schon voll
 	}	
 	
 	// Koeffizienten berechnen

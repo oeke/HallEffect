@@ -32,8 +32,15 @@ extern int iRxBuffer[];         // SPORT0 DMA receive buffer
 extern fract16		fBuf[4097];	//Buffer Array, letzter index ist trash
 extern fract16		fKof[4096];	//Koeffizienten Array
 extern int 		ic=0;		//Buffer-Load Variable
-extern float 		flAcc;		//Hall Akkumulator für die Rückkopplung
+extern fract16		fAcc;		//Hall Akkumulator für die Rückkopplung
 extern int 		iKoAnz;		// Anzahl an verwendeten Koeffizienten
+
+
+//-------------------------------	//Skalierungsfaktoren
+extern fract16		fInp_1Scale = 0.5;	//Skalierungsfaktor Eingang (fInp_1Scale+fAccScale =1)
+extern fract16		fAccScale = 0.5;	//Skalierter Ausgang
+
+extern fract16		fKoeffAnz = 1/iKoAnz;	//bei iKoAnz (29) Koeffizienten	
 
 //---------------------------------------------------------------------------
 // Prototypes                                                              //
@@ -84,44 +91,46 @@ void Process_B(void)
 		i++;	
 	}
 	
-	fBuf[0]=fInp_1;			//neuen Wert aus ADC laden
-	if(ic<4095){			//c max 4095
+	fBuf[0]=fInp_1*fInp_1Scale;			//neuen Wert aus ADC laden * skalierungsfaktor
+ 	fBuf[0]+=fAcc*fAccScale;			// Rückkoplung vom Ausgang, skaliert
+ 	if(ic<4095){			//c max 4095
 		ic++;				//Buffer load erhöhen, falls nicht schon voll
 	}	
 	
 	// Koeffizienten berechnen
 	if(c>4094){
-		flAcc=0;
-		flAcc+=fr16_to_float(fBuf[0]);
-		flAcc+=fr16_to_float(fBuf[500])*exp(500);
-		flAcc+=fr16_to_float(fBuf[1000])*exp(1000);
-		flAcc+=fr16_to_float(fBuf[1500])*exp(1500);
-		flAcc+=fr16_to_float(fBuf[2000])*exp(2000);
-		flAcc+=fr16_to_float(fBuf[2500])*exp(2500);
-		flAcc+=fr16_to_float(fBuf[3000])*exp(3000);
-		flAcc+=fr16_to_float(fBuf[3050])*exp(3050);
-		flAcc+=fr16_to_float(fBuf[3100])*exp(3100);
-		flAcc+=fr16_to_float(fBuf[3150])*exp(3150);
-		flAcc+=fr16_to_float(fBuf[3200])*exp(3200);
-		flAcc+=fr16_to_float(fBuf[3250])*exp(3250);
-		flAcc+=fr16_to_float(fBuf[3300])*exp(3300);
-		flAcc+=fr16_to_float(fBuf[3350])*exp(3350);
-		flAcc+=fr16_to_float(fBuf[3400])*exp(3400);
-		flAcc+=fr16_to_float(fBuf[3450])*exp(3450);
-		flAcc+=fr16_to_float(fBuf[3500])*exp(3500);
-		flAcc+=fr16_to_float(fBuf[3550])*exp(3550);
-		flAcc+=fr16_to_float(fBuf[3600])*exp(3600);
-		flAcc+=fr16_to_float(fBuf[3650])*exp(3650);
-		flAcc+=fr16_to_float(fBuf[3700])*exp(3700);
-		flAcc+=fr16_to_float(fBuf[3750])*exp(3750);
-		flAcc+=fr16_to_float(fBuf[3800])*exp(3800);
-		flAcc+=fr16_to_float(fBuf[3850])*exp(3850);
-		flAcc+=fr16_to_float(fBuf[3900])*exp(3900);
-		flAcc+=fr16_to_float(fBuf[3950])*exp(3950);
-		flAcc+=fr16_to_float(fBuf[4000])*exp(4000);
-		flAcc+=fr16_to_float(fBuf[4050])*exp(4050);
-		flAcc+=fr16_to_float(fBuf[4095])*exp(4095);
+		fAcc=0;
+		fAcc+=fBuf[0]*fKoeffAnz;
+		fAcc+=fBuf[500]*float_to_frac16(exp(500))*fKoeffAnz;
+		fAcc+=fBuf[1000]*float_to_frac16(exp(1000))*fKoeffAnz;
+		fAcc+=fBuf[1500]*float_to_frac16(exp(1500))*fKoeffAnz;
+		fAcc+=fBuf[2000]*float_to_frac16(exp(2000))*fKoeffAnz;
+		fAcc+=fBuf[2500]*float_to_frac16(exp(2500))*fKoeffAnz;
+		fAcc+=fBuf[3000]*float_to_frac16(exp(3000))*fKoeffAnz;
+		fAcc+=fBuf[3050]*float_to_frac16(exp(3050))*fKoeffAnz;
+		fAcc+=fBuf[3100]*float_to_frac16(exp(3100))*fKoeffAnz;
+		fAcc+=fBuf[3150]*float_to_frac16(exp(3150))*fKoeffAnz;
+		fAcc+=fBuf[3200]*float_to_frac16(exp(3200))*fKoeffAnz;
+		fAcc+=fBuf[3250]*float_to_frac16(exp(3250))*fKoeffAnz;
+		fAcc+=fBuf[3300]*float_to_frac16(exp(3300))*fKoeffAnz;
+		fAcc+=fBuf[3350]*float_to_frac16(exp(3350))*fKoeffAnz;
+		fAcc+=fBuf[3400]*float_to_frac16(exp(3400))*fKoeffAnz;
+		fAcc+=fBuf[3450]*float_to_frac16(exp(3450))*fKoeffAnz;
+		fAcc+=fBuf[3500]*float_to_frac16(exp(3500))*fKoeffAnz;
+		fAcc+=fBuf[3550]*float_to_frac16(exp(3550))*fKoeffAnz;
+		fAcc+=fBuf[3600]*float_to_frac16(exp(3600))*fKoeffAnz;
+		fAcc+=fBuf[3650]*float_to_frac16(exp(3650))*fKoeffAnz;
+		fAcc+=fBuf[3700]*float_to_frac16(exp(3700))*fKoeffAnz;
+		fAcc+=fBuf[3750]*float_to_frac16(exp(3750))*fKoeffAnz;
+		fAcc+=fBuf[3800]*float_to_frac16(exp(3800))*fKoeffAnz;
+		fAcc+=fBuf[3850]*float_to_frac16(exp(3850))*fKoeffAnz;
+		fAcc+=fBuf[3900]*float_to_frac16(exp(3900))*fKoeffAnz;
+		fAcc+=fBuf[3950]*float_to_frac16(exp(3950))*fKoeffAnz;
+		fAcc+=fBuf[4000]*float_to_frac16(exp(4000))*fKoeffAnz;
+		fAcc+=fBuf[4050]*float_to_frac16(exp(4050))*fKoeffAnz;
+		fAcc+=fBuf[4095]*float_to_frac16(exp(4095))*fKoeffAnz;
 	}
+	fOut_1=fAcc;
  }
 //--------------------------------------------------------------------------//
 

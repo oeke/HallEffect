@@ -25,20 +25,22 @@ extern fract16        fOut_1;
 extern fract16        fOut_2;
 extern fract16        fOut_3;
 extern fract16        fOut_4;
+extern fract16          fKof[29];
 //-------------------------------
 extern int iTxBuffer[];         // SPORT0 DMA transmit buffer
 extern int iRxBuffer[];         // SPORT0 DMA receive buffer
 //-------------------------------
 fract16		fBuf[4097];	//Buffer Array, letzter index ist trash
-fract16		fKof[4096];	//Koeffizienten Array
+//fract16		fKof[4096];	//Koeffizienten Array
 int 		ic=0;		//Buffer-Load Variable
 fract16		fAcc;		//Hall Akkumulator für die Rückkopplung
 int 		iKoAnz;		// Anzahl an verwendeten Koeffizienten
-
+fract16     fTemp;
+fract16     fTIn;
 
 //-------------------------------	//Skalierungsfaktoren
  float		flInp_1Scale = 0.5;	//Skalierungsfaktor Eingang (fInp_1Scale+fAccScale =1)
- float		flAccScale = 0.2;	//Skalierter Ausgang
+ float		flAccScale = 0.3;	//Skalierter Ausgang
 
  float		flKoeffAnz = 0.03448275862068965517;
  float        tmp;
@@ -68,9 +70,9 @@ void  PutDAC(short,fract16);        // Data to DAC
 //----------------------------------------------------------------------------
 void Process_A(void)                // (For Test Only - Talkthrough) 
  { //------------------------
-   fOut_1   =  fInp_1;              // Input Buffer
+   fOut_1   =   fInp_1;              // Input Buffer
    fOut_2   =  -fInp_1;              // Input Buffer
-   //------------------------
+    
    PutDAC(DAC_1R, fOut_1);  // Write DAC 1R
    PutDAC(DAC_1L, fOut_2);  // Write DAC 1L
    //------------------------
@@ -93,9 +95,12 @@ void Process_B(void)
 		i++;	
 	}
 	
-	tmp=fr16_to_float(fInp_1);
-	fBuf[0]=mult_fr1x16(fInp_1,float_to_fr16(flInp_1Scale));;//*float_to_fr16(flInp_1Scale);			//neuen Wert aus ADC laden * skalierungsfaktor
- 	//fBuf[0]+=fAcc*float_to_fr16(flAccScale);			// Rückkoplung vom Ausgang, skaliert
+	//tmp=fr16_to_float(fInp_1);
+	fTIn=fInp_1;
+	fTemp=-0.5r16;
+	fBuf[0]=mult_fr1x16(fTemp,fTIn); //*float_to_fr16(flInp_1Scale);			//neuen Wert aus ADC laden * skalierungsfaktor
+ 	fTemp=-0.25r16;
+	//fBuf[0]=+mult_fr1x16(fAcc,fTemp);			// Rückkoplung vom Ausgang, skaliert
  	if(ic<4095){			//c max 4095
 		ic++;				//Buffer load erhöhen, falls nicht schon voll
 	}	
@@ -103,9 +108,44 @@ void Process_B(void)
 	// Koeffizienten berechnen
 	if(ic>4094){
 		fAcc=0;
-		fAcc+=fBuf[4000]*float_to_fr16(0.2);
-		//fAcc+=fBuf[0]*float_to_fr16(flKoeffAnz);
-		/*fAcc+=fBuf[500]*float_to_fr16(exp(-500))*float_to_fr16(flKoeffAnz);
+		fAcc+=fBuf[1000];
+		fTemp=-0.5r16;
+		fAcc+=mult_fr1x16(fTemp,fBuf[2000]);
+		fTemp=-0.25r16;
+		fAcc+=mult_fr1x16(fTemp,fBuf[3000]);
+		fTemp=-0.125r16;
+		fAcc+=mult_fr1x16(fTemp,fBuf[4000]);
+	/*	fAcc+=mult_fr1x16(fBuf[0],fKof[0]);
+		fAcc+=mult_fr1x16(fBuf[500],fKof[1]);
+		fAcc+=mult_fr1x16(fBuf[1000],fKof[2]);
+		fAcc+=mult_fr1x16(fBuf[1500],fKof[3]);
+		fAcc+=mult_fr1x16(fBuf[2000],fKof[4]);
+		fAcc+=mult_fr1x16(fBuf[2500],fKof[5]);
+		fAcc+=mult_fr1x16(fBuf[3000],fKof[6]);
+		fAcc+=mult_fr1x16(fBuf[3050],fKof[7]);
+		fAcc+=mult_fr1x16(fBuf[3100],fKof[8]);
+		fAcc+=mult_fr1x16(fBuf[3150],fKof[9]);
+        fAcc+=mult_fr1x16(fBuf[3200],fKof[10]);
+		fAcc+=mult_fr1x16(fBuf[3250],fKof[11]);
+		fAcc+=mult_fr1x16(fBuf[3300],fKof[12]);
+		fAcc+=mult_fr1x16(fBuf[3350],fKof[13]);
+		fAcc+=mult_fr1x16(fBuf[3400],fKof[14]);
+		fAcc+=mult_fr1x16(fBuf[3450],fKof[15]);
+		fAcc+=mult_fr1x16(fBuf[3500],fKof[16]);
+		fAcc+=mult_fr1x16(fBuf[3550],fKof[17]);
+		fAcc+=mult_fr1x16(fBuf[3600],fKof[18]);
+		fAcc+=mult_fr1x16(fBuf[3650],fKof[19]);
+		fAcc+=mult_fr1x16(fBuf[3700],fKof[20]);
+		fAcc+=mult_fr1x16(fBuf[3750],fKof[21]);
+		fAcc+=mult_fr1x16(fBuf[3800],fKof[22]);
+		fAcc+=mult_fr1x16(fBuf[3850],fKof[23]);
+		fAcc+=mult_fr1x16(fBuf[3900],fKof[24]);
+		fAcc+=mult_fr1x16(fBuf[3950],fKof[25]);
+		fAcc+=mult_fr1x16(fBuf[4000],fKof[26]);
+		fAcc+=mult_fr1x16(fBuf[4050],fKof[27]);
+		fAcc+=mult_fr1x16(fBuf[4095],fKof[28]);*/
+		
+				/*fAcc+=fBuf[500]*float_to_fr16(exp(-500))*float_to_fr16(flKoeffAnz);
 		fAcc+=fBuf[1000]*float_to_fr16(exp(-1000))*float_to_fr16(flKoeffAnz);
 		fAcc+=fBuf[1500]*float_to_fr16(exp(-1500))*float_to_fr16(flKoeffAnz);
 		fAcc+=fBuf[2000]*float_to_fr16(exp(-2000))*float_to_fr16(flKoeffAnz);
@@ -134,6 +174,12 @@ void Process_B(void)
 		fAcc+=fBuf[4050]*float_to_fr16(exp(-4050))*float_to_fr16(flKoeffAnz);
 		fAcc+=fBuf[4095]*float_to_fr16(exp(-4095))*float_to_fr16(flKoeffAnz);*/
 	}
+//	if(fInp_1 > 0x8000)
+//	 fInp_1=fInp_1+1;
+//	fTemp=0x4000;
+    fTemp=-0.6r16;	
+    //fAcc=mult_fr1x16(fAcc,fTemp);// Demo: rauschen bei multiplikation mit faktor
+	fBuf[0]=mult_fr1x16(fTemp,fTIn);
 	fOut_1=fBuf[0];
 	PutDAC(DAC_1R, fOut_1);
 	PutDAC(DAC_1L, fOut_1);

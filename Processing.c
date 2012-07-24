@@ -38,6 +38,7 @@ int 		iKoAnz;		// Anzahl an verwendeten Koeffizienten
 fract16     fTemp;
 fract16     fTemp2;
 fract16     fTIn;
+int         ip=0;
 
 fract16     fIn;
 fract32     fTmp_32;
@@ -91,34 +92,69 @@ void Process_A(void)                // (For Test Only - Talkthrough)
 	if(ic<4095){			//c max 4095
 		ic++;				//Buffer load erhöhen, falls nicht schon voll
 	}
+	if(ip>=4095)
+	    ip-=4095;
 	
-	fTmp_16=-0.5r16;
-	fBuf[0]=fTmp_16*fIn;
-	fBuf[0]<<1;
-	/*fTmp_16=0.0r16;
+	fTmp_16=0.6r16;
+	fBuf[ip]=fTmp_16*fIn;
+	fBuf[ip]<<1;
+	fTmp_16=0.3r16;
 	fTmp2_16=fAcc>>16;
 	fTmp_32=fTmp_16*fTmp2_16;
-	fBuf[0]+=fTmp_32<<1;
-	
+	fBuf[ip]+=fTmp_32<<1;
+	int k=0;
 	if(ic>4094){
 		fAcc=0;
-		fTmp_16=0.3r16;
-		fTmp2_16=fBuf[3500]>>16;
+		
+		fTmp_16=0.8r16;
+		k=ip+1000;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
 		fTmp2_32=fTmp2_16*fTmp_16;
 		fTmp2_32<<1;
 		fAcc+=fTmp2_32;
-		fTmp_16=0.2r16;
-		fTmp2_16=fBuf[4000]>>16;
+		
+		fTmp_16=0.5r16;
+		k=ip+3000;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
 		fTmp2_32=fTmp2_16*fTmp_16;
 		fTmp2_32<<1;
 		fAcc+=fTmp2_32;
+		
+		fTmp_16=0.25r16;
+		k=ip+4000;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;
+		
+		/*fTmp_16=0.27r16;
+		k=ip+3800;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;*/
 	}
-	*/
+	
 	/*fTemp=-0.6r16;	
     fAcc=mult_fr1x16(fAcc,fTemp);
 	*/
-   fOut_1   =   fBuf[0]>>16;              // Input Buffer
-   fOut_2   =   fBuf[0]>>16;              // Input Buffer
+	
+	fTmp_16=0.3r16;
+	fTmp2_16=fAcc>>16;
+	fTmp_32=fTmp_16*fTmp2_16;
+	fOut_1=fTmp_32>>15;
+	fOut_2=fOut_1;
+   //fOut_1   =   fBuf[ip]>>16;              // Input Buffer
+   //fOut_2   =   fBuf[ip]>>16; 
+   ip++;             // Input Buffer
     /*
     fTemp=-0.5r16;
     fOut_1=mult_fr1x16(fTemp2,fTemp);
@@ -246,7 +282,83 @@ void Process_B(void)
 //--------------------------------------------------------------------------//
 void Process_C(void) 
  {
-
+    fIn    =   fInp_1;
+    
+   
+   
+   // ------------ folgender Teil dauert anscheinen zu Lange !!!!!!! -------
+   /*int i=0;
+	while(i<ic){
+		fBuf[i+1]=fBuf[i];	//Buffer um 1 nach rechts schieben
+		i++;	
+	}*/	
+	
+	if(ic<4095){			//c max 4095
+		ic++;				//Buffer load erhöhen, falls nicht schon voll
+	}
+	if(ip>=4095)
+	    ip-=4095;
+	
+	fTmp_16=-0.5r16;
+	fBuf[ip]=fTmp_16*fIn;
+	fBuf[ip]<<1;
+	fTmp_16=0.125r16;
+	fTmp2_16=fAcc>>16;
+	fTmp_32=fTmp_16*fTmp2_16;
+	//fBuf[ip]+=fTmp_32<<1;
+	int k=0;
+	if(ic>4094){
+		fAcc=0;
+		
+		fTmp_16=0.35r16;
+		k=ip+3000;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=0.3r16;
+		k=ip+3500;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=0.25r16;
+		k=ip+4000;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=0.27r16;
+		k=ip+3800;
+		if(k>=4095)
+		    k-=4095;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32<<1;
+		fAcc+=fTmp2_32;
+	}
+	
+	/*fTemp=-0.6r16;	
+    fAcc=mult_fr1x16(fAcc,fTemp);
+	*/
+   fOut_1   =   fBuf[ip]>>16;              // Input Buffer
+   fOut_2   =   fBuf[ip]>>16; 
+   ip++;             // Input Buffer
+    /*
+    fTemp=-0.5r16;
+    fOut_1=mult_fr1x16(fTemp2,fTemp);
+    fOut_2=-fTemp2;*/
+   PutDAC(DAC_1R, fOut_1);  // Write DAC 1R
+   PutDAC(DAC_1L, fOut_2);  // Write DAC 1L
  }
 //--------------------------------------------------------------------------//
 

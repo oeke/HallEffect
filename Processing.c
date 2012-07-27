@@ -25,36 +25,22 @@ extern fract16        fOut_1;
 extern fract16        fOut_2;
 extern fract16        fOut_3;
 extern fract16        fOut_4;
-extern fract16          fKof[11];
-extern fract16          fKof2[11];
+extern fract16        fKof[11];  // Koeffizienten Array, wird in der Main initialisiert
 
 //-------------------------------
 extern int iTxBuffer[];         // SPORT0 DMA transmit buffer
 extern int iRxBuffer[];         // SPORT0 DMA receive buffer
 //-------------------------------
 fract32		fBuf[4096];	//Buffer Array
-//fract16		fKof[4096];	//Koeffizienten Array
 int 		ic=0;		//Buffer-Load Variable
 fract32		fAcc;		//Hall Akkumulator f√ºr die R√ºckkopplung
-int 		iKoAnz;		// Anzahl an verwendeten Koeffizienten
-fract16     fTemp;
-fract16     fTemp2;
-fract16     fTIn;
-int         ip=0;
+int         ip=0;       //Pointer auf Ringbuffer, aktueller Wert
 
-fract16     fIn;
+fract16     fIn;        //Variable zum Speichern des neuen Werts
 fract32     fTmp_32;
 fract32     fTmp2_32;
 fract16     fTmp_16;
 fract16     fTmp2_16;
-
-//-------------------------------	//Skalierungsfaktoren
- float		flInp_1Scale = 0.5;	//Skalierungsfaktor Eingang (fInp_1Scale+fAccScale =1)
- float		flAccScale = 0.3;	//Skalierter Ausgang
-
- float		flKoeffAnz = 0.03448275862068965517;
- float        tmp;
-//extern fract16		float_to_fr16(flKoeffAnz) =1/iKoAnz;	//bei iKoAnz (29) Koeffizienten	
 
 //---------------------------------------------------------------------------
 // Prototypes                                                              //
@@ -81,32 +67,37 @@ void  PutDAC(short,fract16);        // Data to DAC
 void Process_A(void)                // (For Test Only - Talkthrough) 
  { //------------------------
    
- 	fIn    =   fInp_1;
+ 	fIn    =   fInp_1;          // neuen Wert speichern
     	
 	
-	ip=ip&0x00000fff;				// Kreisindizierung mit 4096 indizes
-	/*
-	fTmp_16=0.6r16;					// eingangskoeffizient
-	fBuf[ip]=fTmp_16*fIn;*/			// 16 bit Multiplikation mit neuem Wert, ergbnis 32 bit
-	fBuf[ip]=fIn<<15;					// 1 mal schieben um korrektes ergebnis zu erhalten
-	/*fTmp_16=0.7r16;					// R√ºckkopplungskoeffizient
-	fTmp2_16=fAcc>>16;				// Akkumulator 32 bit in 16 variable laden
-	fTmp_32=fTmp_16*fTmp2_16;*/		// 16 Multiplikation mit 32 bit ergebnis
-	fBuf[ip]+=fAcc>>2;			// ergebnis korrigieren
-	int k=0;						// koeffizienten index
-	if(ic>4095){
+	ip=ip&0x00000fff;			// Kreisindizierung mit 4096 indizes
+	fBuf[ip]=fIn<<15;			// 16 bit in 32 bit fract also 16 mal nach links schieben
+	                            // und multiplizieren mit Faktor 0.5, also 1 mal nach rechts schieben
+	
+	fBuf[ip]+=fAcc>>2;			// R¸ckkoplung mit faktor 0.25
+	int k=0;					// Koeffizienten-Index
+	
+	if(ic>4095){                // wenn Buffer gef¸llt ist (buffer load > 4095
 		fAcc=0;
 		
-		fTmp_16=fKof[0];
-		k=ip;
-		k=k&0x00000fff;
-		fTmp2_16=fBuf[k]>>16;
-		fTmp2_32=fTmp2_16*fTmp_16;
-		fTmp2_32>>1;
-		fAcc+=fTmp2_32;
+		fTmp_16=fKof[0];            // Koeffizient laden
+		k=ip;                       // Bufferindex relativ zum letzten Wert (hier 0)
+		k=k&0x00000fff;             // Kreisindizierung des buffers, max 4095
+		fTmp2_16=fBuf[k]>>16;       // fract32 Buffer-Wert in fract16 Variable
+		fTmp2_32=fTmp2_16*fTmp_16;  // 16 bit Multiplikation mit 32 bit Ergebniss
+		
+		fTmp2_32>>1;                /* Ergebnis m¸sste 1 mal links geschoben werden
+		                             * damit das fract32 format stimmt, aber multiplikation
+		                             * mit Faktor 0.25 (2mal rechts schieben) ergibt
+		                             * 1 mal rechts schieben
+		                             */
+		                             
+		fAcc+=fTmp2_32;             // Ergebnis akkumulieren
+		
+		
 		
 		fTmp_16=fKof[1];
-		k=ip+500;
+		k=ip+500;               // Bufferindex relativ zum letzten Wert (hier 500)
 		k=k&0x00000fff;
 		fTmp2_16=fBuf[k]>>16;
 		fTmp2_32=fTmp2_16*fTmp_16;
@@ -184,51 +175,19 @@ void Process_A(void)                // (For Test Only - Talkthrough)
 		fTmp2_32=fTmp2_16*fTmp_16;
 		fTmp2_32>>1;
 		fAcc+=fTmp2_32;
-		
-		/*fTmp_16=0.8r16;				// 1. koeffizient
-		k=ip+1000;					// koeffizientenindex relativ zum letzten wert
-		k=k&0x00000fff;				// kreisindizierung des koeffizientenindex, max 4095
-		fTmp2_16=fBuf[k]>>16;		// 32 bit buffer in 16 variable 
-		fTmp2_32=fTmp2_16*fTmp_16;	// 16 bit multiplikation mit 32 bit ergebniss
-		fTmp2_32<<1;				// korrigieren des ergebnis'	
-		fAcc+=fTmp2_32;				// Wert akkumulieren
-		
-		fTmp_16=0.5r16;
-		k=ip+3000;
-		k=k&0x00000fff;
-		fTmp2_16=fBuf[k]>>16;
-		fTmp2_32=fTmp2_16*fTmp_16;
-		fTmp2_32<<1;
-		fAcc+=fTmp2_32;
-		
-		fTmp_16=0.25r16;
-		k=ip+4000;
-		k=k&0x00000fff;
-		fTmp2_16=fBuf[k]>>16;
-		fTmp2_32=fTmp2_16*fTmp_16;
-		fTmp2_32<<1;
-		fAcc+=fTmp2_32;*/
-		
-		/*fTmp_16=0.27r16;
-		k=ip+3800;
-		if(k>=4095)
-		    k-=4095;
-		fTmp2_16=fBuf[k]>>16;
-		fTmp2_32=fTmp2_16*fTmp_16;
-		fTmp2_32<<1;
-		fAcc+=fTmp2_32;*/
 	}
    
-     if(ic<4096){			//c max 4095
-    		ic++;			//Buffer load erh√∂hen, falls nicht schon voll
-    	}
-      ip++;                 // pointer auf ringbuffer (kreisindizierung)
+	if(ic<4096){			// ic max 4095
+        ic++;			    // Buffer load erh√∂hen, falls nicht schon voll
+    }
+    ip++;                   // pointer auf ringbuffer erhˆhen (kreisindizierung)
 	
-    fOut_1=fAcc>>16;	        // akkumulator wert auf beide ausg√§nge legen
+    fOut_1=fAcc>>16;	    // Akkumulator Wert auf beide Ausg√§nge legen
+                            // 16 mal rechtsschieben, da fract32 zu fract16 konvertierung
 	fOut_2=fOut_1;
    
-   PutDAC(DAC_1R, fOut_1);  // Write DAC 1R
-   PutDAC(DAC_1L, fOut_2);  // Write DAC 1L
+    PutDAC(DAC_1R, fOut_1); // Write DAC 1R
+    PutDAC(DAC_1L, fOut_2); // Write DAC 1L
    //------------------------
  }
 //--------------------------------------------------------------------------//

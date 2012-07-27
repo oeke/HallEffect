@@ -202,14 +202,20 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 \end{figure}
 Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11&t=43975&start=15
 
+\subsubsection{Künstlicher Hall}
+Um mit dem DSP künstlichen Hall zu erzeugen, müssen wir die vom AD-Wandler erhaltenen Werte Buffern um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird nun mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und ausgegeben. Zusätlich wird der Akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert mit drauf Addiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
+
 
 \subsubsection{Infinite Impulse Response Filter}
-Zzril delenit augue duis dolore te feugait nulla facilisi nam liber tempor. Nihil imperdiet doming; id quod mazim placerat facer possim assum? Mirum est notare quam littera gothica 
-quam nunc putamus! Consectetuer adipiscing elit sed diam nonummy nibh euismod.
+Das Verfahren besitzt die Struktur eines IIR-Filters mit entsprechenden Koeffizienten, Vorfaktoren und einer Rückkopplung.
+[Hier bild einfügen, mach ich noch)
 
 \subsubsection{Implementierung}
-Zzril delenit augue duis dolore te feugait nulla facilisi nam liber tempor. Nihil imperdiet doming; id quod mazim placerat facer possim assum? Mirum est notare quam littera gothica 
-quam nunc putamus! Consectetuer adipiscing elit sed diam nonummy nibh euismod.
+\begin{figure}[h]
+	\includegraphics[scale=0.5]{Bilder/signalabgriffe.png}
+	\caption{Raumimpulsantwort}
+	\label{labelname}
+\end{figure}
 
 \section{Schluss}
 Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.

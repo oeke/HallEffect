@@ -25,7 +25,9 @@ extern fract16        fOut_1;
 extern fract16        fOut_2;
 extern fract16        fOut_3;
 extern fract16        fOut_4;
-extern fract16          fKof[29];
+extern fract16          fKof[11];
+extern fract16          fKof2[11];
+
 //-------------------------------
 extern int iTxBuffer[];         // SPORT0 DMA transmit buffer
 extern int iRxBuffer[];         // SPORT0 DMA receive buffer
@@ -83,19 +85,107 @@ void Process_A(void)                // (For Test Only - Talkthrough)
     	
 	
 	ip=ip&0x00000fff;				// Kreisindizierung mit 4096 indizes
-	
+	/*
 	fTmp_16=0.6r16;					// eingangskoeffizient
-	fBuf[ip]=fTmp_16*fIn;			// 16 bit Multiplikation mit neuem Wert, ergbnis 32 bit
-	fBuf[ip]<<1;					// 1 mal schieben um korrektes ergebnis zu erhalten
-	fTmp_16=0.3r16;					// Rückkopplungskoeffizient
+	fBuf[ip]=fTmp_16*fIn;*/			// 16 bit Multiplikation mit neuem Wert, ergbnis 32 bit
+	fBuf[ip]=fIn<<15;					// 1 mal schieben um korrektes ergebnis zu erhalten
+	/*fTmp_16=0.7r16;					// Rückkopplungskoeffizient
 	fTmp2_16=fAcc>>16;				// Akkumulator 32 bit in 16 variable laden
-	fTmp_32=fTmp_16*fTmp2_16;		// 16 Multiplikation mit 32 bit ergebnis
-	fBuf[ip]+=fTmp_32<<1;			// ergebnis korrigieren
+	fTmp_32=fTmp_16*fTmp2_16;*/		// 16 Multiplikation mit 32 bit ergebnis
+	fBuf[ip]+=fAcc>>2;			// ergebnis korrigieren
 	int k=0;						// koeffizienten index
 	if(ic>4095){
 		fAcc=0;
 		
-		fTmp_16=0.8r16;				// 1. koeffizient
+		fTmp_16=fKof[0];
+		k=ip;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[1];
+		k=ip+500;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[2];
+		k=ip+1100;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[3];
+		k=ip+1800;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[4];
+		k=ip+2400;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[5];
+		k=ip+2700;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[6];
+		k=ip+3000;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[7];
+		k=ip+3250;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[8];
+		k=ip+3500;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[9];
+		k=ip+3700;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[10];
+		k=ip+4000;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		/*fTmp_16=0.8r16;				// 1. koeffizient
 		k=ip+1000;					// koeffizientenindex relativ zum letzten wert
 		k=k&0x00000fff;				// kreisindizierung des koeffizientenindex, max 4095
 		fTmp2_16=fBuf[k]>>16;		// 32 bit buffer in 16 variable 
@@ -117,7 +207,7 @@ void Process_A(void)                // (For Test Only - Talkthrough)
 		fTmp2_16=fBuf[k]>>16;
 		fTmp2_32=fTmp2_16*fTmp_16;
 		fTmp2_32<<1;
-		fAcc+=fTmp2_32;
+		fAcc+=fTmp2_32;*/
 		
 		/*fTmp_16=0.27r16;
 		k=ip+3800;
@@ -129,15 +219,12 @@ void Process_A(void)                // (For Test Only - Talkthrough)
 		fAcc+=fTmp2_32;*/
 	}
    
-   if(ic<4096){			//c max 4095
-		ic++;				//Buffer load erhöhen, falls nicht schon voll
-	}
-   ip++;             // pointer auf ringbuffer (kreisindizierung)
-   
-   fTmp_16=0.3r16;		// Akkumulator durch anzahl der Werte teilen (ca.)
-	fTmp2_16=fAcc>>16;	
-	fTmp_32=fTmp_16*fTmp2_16;
-	fOut_1=fTmp_32>>15;	// akkumulator wert auf beide ausgänge legen
+     if(ic<4096){			//c max 4095
+    		ic++;			//Buffer load erhöhen, falls nicht schon voll
+    	}
+      ip++;                 // pointer auf ringbuffer (kreisindizierung)
+	
+    fOut_1=fAcc>>16;	        // akkumulator wert auf beide ausgänge legen
 	fOut_2=fOut_1;
    
    PutDAC(DAC_1R, fOut_1);  // Write DAC 1R
@@ -156,8 +243,11 @@ void Process_A(void)                // (For Test Only - Talkthrough)
 //--------------------------------------------------------------------------//
 void Process_B(void) 
  { 
-	fOut_1 = fInp_1;
-	fOut_2 = fInp_2;
+     
+    fTmp_16=0.5r16;
+	fTmp2_32=fInp_1*fTmp_16;
+	fOut_1=fTmp2_32>>15; 
+	
 	
 	PutDAC(DAC_1R, fOut_1);
 	PutDAC(DAC_1L, fOut_1);
@@ -174,11 +264,10 @@ void Process_B(void)
 //--------------------------------------------------------------------------//
 void Process_C(void) 
  {
-   fOut_1 = fInp_1;
-	fOut_2 = fInp_2;
+    fOut_1=fInp_1;	
 	
-   PutDAC(DAC_1R, fOut_1);  // Write DAC 1R
-   PutDAC(DAC_1L, fOut_2);  // Write DAC 1L
+	PutDAC(DAC_1R, fOut_1);
+	PutDAC(DAC_1L, fOut_1);
  }
 //--------------------------------------------------------------------------//
 

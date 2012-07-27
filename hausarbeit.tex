@@ -191,7 +191,7 @@ Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend opti
 
 \subsubsection{Hall}
 Hall bzw. Nachhall ist ein Effekt kontinuierlicher Reflexionen einer Schallwelle.
-Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die Reflektierten Wellen, haben unterschiedliche laufzeiten aufgrund der unterschiedlichen Abstände zu den reflektierenden Objekten, treffen mehrere Reflektierte Schallwellen, der selben Ursprungs-Schallwelle mit unterschiedlichen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je länger der Zeitpunkt ihrer Enstehung zurückliegt.
+Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die Reflektierten Wellen, haben unterschiedliche laufzeiten aufgrund der unterschiedlichen Abstände zu den reflektierenden Objekten, treffen mehrere Reflektierte Schallwellen, der selben Ursprungs-Schallwelle mit unterschiedlichen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je länger der Zeitpunkt ihrer Enstehung zurückliegt.
 Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprungssignals sind, und diffusem Nachhall, welcher aus vielen Reflektionen mit stärkerer Abschwächung des Ursprungssignals besteht. Verantwortlich für den 'räumlichen' klang des Halls, sind die frühen Reflektionen, wobei der Nachhall wiederum aus Reflektionen der frühen Reflektionen entsteht und für mehr 'Volumen' sorgt.
 
 
@@ -202,15 +202,15 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 \end{figure}
 Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11&t=43975&start=15
 
-\subsubsection{Künstlicher Hall}
-Um mit dem DSP künstlichen Hall zu erzeugen, müssen wir die vom AD-Wandler erhaltenen Werte Buffern um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird nun mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und ausgegeben. Zusätlich wird der Akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert mit drauf Addiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
-
-
-\subsubsection{Infinite Impulse Response Filter}
-Das Verfahren besitzt die Struktur eines IIR-Filters mit entsprechenden Koeffizienten, Vorfaktoren und einer Rückkopplung.
-[Hier bild einfügen, mach ich noch)
+\subsubsection{Künstlicher Hall mit Infinite Impulse Response Filter}
+Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
+Die entspricht der Struktur eines IIR-Filters.
 
 \subsubsection{Implementierung}
+Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern
+Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
+Da 
+In 
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/signalabgriffe.png}
 	\caption{Raumimpulsantwort}

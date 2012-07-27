@@ -205,10 +205,16 @@ Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11&t=43975&start=15
 \subsubsection{Künstlicher Hall mit Infinite Impulse Response Filter}
 Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
 Die entspricht der Struktur eines IIR-Filters.
+\begin{figure}[h]
+	\includegraphics[scale=0.5]{Bilder/iir.png}
+	\caption{IIR-Filter Struktur}
+	\label{labelname}
+\end{figure}
 
 \subsubsection{Implementierung}
 Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
+
 Da 
 In 
 \begin{figure}[h]

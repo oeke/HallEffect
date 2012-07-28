@@ -212,8 +212,10 @@ Die entspricht der Struktur eines IIR-Filters.
 \end{figure}
 
 \subsubsection{Implementierung}
-Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern
+Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern und so ohne Schieben damit weitergerechnet werden kann.
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
+Dieser Wert wird im Buffer abgelegt. Um das Verschieben von 4096 Werten pro Prozessaufruf zu vermeiden, das die zu lange dauern würde, wurde ein Ringspeicher realisiert. Dazu wird eine Zählvariable gespeichert die pro Prozessaufruf um 1 inkrementiert wird und den index des Buffers angibt, an dessen Stelle der neue Wert gespeichert wird. Geht der Wert der  Zählvariable über 4095 hinaus, wird die Zahl 4096 von ihr subtrahiert. Dies wurde durch eine AND-Operation mit dem Wert 0x0fff in jedem Prozessaufruf realisiert, sodass alle bits ab der Stelle 13 abgeschnitten werden.
+Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen. 
 
 Da 
 In 

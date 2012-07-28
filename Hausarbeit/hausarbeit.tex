@@ -228,7 +228,7 @@ Die Implementierung erfolgte mit C.
 	\caption{VisualDSP++5.0}
 	\label{labelname}
 \end{figure}
-Der BF533 Signalprozessor arbeitet mit einer Maximalen Taktrate von 750 MHz und besitzt 148 KB Flash Speicher. Außerdem ist er mit einem 16 Bit externem Bus vershen, sowie 12 DMAs und 3 Timer. der BF533 arbeitet mit 16 oder 32 Bit Befehlen und mit einem 16 oder 32 Bit Fixed-Point Format in Form von Integer oder Fractional. Abbildung x zeigt ein Blockdiagramm des BF533.
+Der BF533 Signalprozessor arbeitet mit einer Maximalen Taktrate von 750 MHz und besitzt 148 KB Flash Speicher. Außerdem ist er mit einem 16 Bit externem Bus vershen, sowie 12 DMAs und 3 Timer. der BF533 arbeitet mit 16 oder 32 Bit Befehlen und mit einem 16 oder 32 Bit Fixed-Point Format in Form von Integer oder Fractional. Abbildung 4 zeigt ein Blockdiagramm des BF533.
 
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/bf533block.png}
@@ -263,7 +263,7 @@ Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 W
 
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit dem Vorfaktor 0.5 im Buffer abgelegt. Der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht. 
 Um das Verschieben von 4096 Werten pro Prozessaufruf zu vermeiden und Zeit zu sparen, wurde ein Ringspeicher realisiert. Dazu wird eine Zählvariable gespeichert die pro Prozessaufruf um 1 inkrementiert wird und den Index des Buffers angibt, an dessen Stelle der neue Wert gespeichert wird. Geht der Wert der Zählvariable über 4095 hinaus, wird die Zahl 4096 von ihr subtrahiert. Dies wurde durch eine AND-Operation mit dem Wert 0x0fff in jedem Prozessaufruf realisiert, sodass alle Bits ab der Stelle 13  aufwärts abgeschnitten werden.
-Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen.
+Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 7 erkennen.
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/signalabgriffe.png}
 	\caption{Raumimpulsantwort}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.31)  28 JUL 2012 12:18
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.31)  28 JUL 2012 12:37
 entering extended mode
  %&-line parsing enabled.
 **hausarbeit.tex
@@ -634,7 +634,7 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 65.
 (/usr/share/texmf-texlive/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<Bilder/Versuchsaufbau_Demonstration.png, id=59, 266.9975pt x 106.3975pt>
+<Bilder/Versuchsaufbau_Demonstration.png, id=63, 266.9975pt x 106.3975pt>
 File: Bilder/Versuchsaufbau_Demonstration.png Graphic file (type png)
 
 <use Bilder/Versuchsaufbau_Demonstration.png>
@@ -674,10 +674,10 @@ Class scrartcl Info: You've told me to use the font selection of the element
 (scrartcl)            on input line 10.
 Class scrartcl Info: You've told me to use the font selection of the element
 (scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 14.
+(scrartcl)            on input line 15.
 Class scrartcl Info: You've told me to use the font selection of the element
 (scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 15.
+(scrartcl)            on input line 16.
 )
 \tf@toc=\write4
 \openout4 = `hausarbeit.toc'.
@@ -704,7 +704,7 @@ d-ul-teil-nehmern vorzustellen
 [3
 
 ]
-<Bilder/Versuchsaufbau_Implementation.png, id=101, 274.02374pt x 126.4725pt>
+<Bilder/Versuchsaufbau_Implementation.png, id=106, 274.02374pt x 126.4725pt>
 File: Bilder/Versuchsaufbau_Implementation.png Graphic file (type png)
 
 <use Bilder/Versuchsaufbau_Implementation.png>
@@ -717,7 +717,7 @@ l-ten wer-den. Dieses
  []
 
 [4 <./Bilder/Versuchsaufbau_Implementation.png>]
-<Bilder/DSV_Blockschaltbild.png, id=108, 818.05624pt x 95.35625pt>
+<Bilder/DSV_Blockschaltbild.png, id=113, 818.05624pt x 95.35625pt>
 File: Bilder/DSV_Blockschaltbild.png Graphic file (type png)
 
 <use Bilder/DSV_Blockschaltbild.png>
@@ -731,7 +731,7 @@ ers (D/A). An-schlieÿend
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 192.
 
-[6] <Bilder/raumimpulsantwort.jpg, id=122, 702.625pt x 554.07pt>
+[6] <Bilder/raumimpulsantwort.jpg, id=127, 702.625pt x 554.07pt>
 File: Bilder/raumimpulsantwort.jpg Graphic file (type jpg)
 
 <use Bilder/raumimpulsantwort.jpg>
@@ -740,23 +740,23 @@ Overfull \hbox (18.55518pt too wide) in paragraph at lines 203--204
 &t=43975&start=15 
  []
 
-<Bilder/iir.png, id=123, 822.07124pt x 199.74625pt>
+<Bilder/iir.png, id=128, 822.07124pt x 199.74625pt>
 File: Bilder/iir.png Graphic file (type png)
  <use Bilder/iir.png>
 [7 <./Bilder/raumimpulsantwort.jpg>]
-<Bilder/signalabgriffe.png, id=130, 662.475pt x 397.485pt>
+<Bilder/signalabgriffe.png, id=135, 662.475pt x 397.485pt>
 File: Bilder/signalabgriffe.png Graphic file (type png)
 
 <use Bilder/signalabgriffe.png>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[8 <./Bilder/iir.png (PNG copy)>] [9 <./Bilder/signalabgriffe.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
+[8 <./Bilder/iir.png (PNG copy)>] [9 <./Bilder/signalabgriffe.png>] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
-[10
+[11
 
 ] (./hausarbeit.aux)
 
@@ -764,10 +764,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7390 strings out of 495061
- 110701 string characters out of 1182621
+ 7393 strings out of 495061
+ 110748 string characters out of 1182621
  209850 words of memory out of 3000000
- 10414 multiletter control sequences out of 15000+50000
+ 10415 multiletter control sequences out of 15000+50000
  14817 words of font info for 34 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  43i,8n,43p,632b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -788,9 +788,9 @@ r/jknappen/ec/ecrm1200.600pk> </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen
 texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texliv
 e/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb>
-Output written on hausarbeit.pdf (10 pages, 224801 bytes).
+Output written on hausarbeit.pdf (11 pages, 226691 bytes).
 PDF statistics:
- 483 PDF objects out of 1000 (max. 8388607)
- 32 named destinations out of 1000 (max. 500000)
- 143 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 494 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 500000)
+ 151 words of extra memory for PDF output out of 10000 (max. 10000000)
 

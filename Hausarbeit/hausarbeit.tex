@@ -221,7 +221,11 @@ Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, ind
 	\label{labelname}
 \end{figure}
 Da wir mit einem Ringspeicher arbeiten, sind die Indizes der Abgriffe zwar konstant, jedoch relativ zum Index des neuen Wertes. Auch hier wurde mit einer AND-Operation mit 0x0fff gearbeitet, damit der index bis maximal 4095 geht und dann von 0 fortgesetzt wird.
-Zur Berechnung der Koeffizienten wurde eine Exponentialfunktion zur Basis e folgender Form gewählt: k=exp(-3/4096*i) wobei i der Index des Abgriffes und k der resultierende Koeffizient ist.
+Zur Berechnung der Koeffizienten wurde eine Exponentialfunktion zur Basis e folgender Form gewählt:
+
+$k=exp(-3/4096*i)$
+ 
+wobei i der Index des Abgriffes und k der resultierende Koeffizient ist.
 Beim Multiplizieren eines Abgriffes mit einem Koeffizienten wird außerdem das Ergniss durch 4 geteilt um eine Übersteuerung zu vermeiden. Realisiert wurde das durch ein 2-fachen Right-Shift.
 Am ende des Prozesses wird der Akkumulator an den Ausgang übergeben, welcher weiter an den DA-Wandler gegeben wird. Dabei ist darauf zu achten den Akkumulator durch ein 16-fachen Right-Shift für ein fractional-16 Format zu konvertieren.
 Der Akkumulator wird ebenfalls beim nächsten Aufruf des Prozess mit dem Faktor 0.25, also zweimaligem Right-Shift auf den nächsten neuen Wert addiert, um die Rückkopplung zu realisiern.

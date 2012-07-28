@@ -191,8 +191,14 @@ So lässt sich durch die Programmierbarkeit von Digitalen Signalprozessoren (DSP
 Die Störanfälligkeit digitaler Signalverarbeitung z.B. gegenüber Alterung oder Temperatureinflüssen ist geringer als bei analoger Signalverarbeitung und das Signal/Rauschverhältnis der Signale ist in Abhängigkeit von der auf dem DSP verfügbaren Bitbreite anpassbar.
 Filtereffekte durch digitale Filter können mit sehr steilen Flanken an-/ bzw abgeschaltet werden, während analoge Filter dafür eine Übergangszeit benötigen.
 
-Neben vielen Vorteilen bringt digitale Signalverarbeitung jedoch auch Probleme mit sich. So werden bei der Zeit- \& Amplitudenquantisierung notwendigerweise Fehler gemacht.
-Häufig sind einfache analoge Systeme billiger und günstiger im Energieverbrauch.
+Neben vielen Vorteilen bringt digitale Signalverarbeitung jedoch auch Nachteile mit sich. So werden bei der Zeit- \& Amplitudenquantisierung notwendigerweise Fehler gemacht. Häufig sind einfache analoge Systeme billiger und günstiger im Energieverbrauch.
+Das größte Problem jedoch ist die Geschwindigkeit der Verarbeitung. Genauer gesagt die Zeit, die benötigt wird zur berechnung arithmetischer Funktionen für die Signalverarbeitung.
+
+Digitale Signalprozessoren sind dafür optimiert, die bei der Signalverarbeitung anfallenden Berechnungen möglichst effizient und schnell abzuarbeiten. Sie haben die Echtzeitfähigkeit der Signalverarbeitung zum Ziel. Das heißt, dass die benötigte Zeit zur Berechnung vorhersagbar ist.  Dafür haben DSPs spezielle Instruktionssätze um die arithmetischen Basisfunktionen digitaler Signalbearbeitung sehr effizient zu realisieren. MAC-Befehle erlauben es in einem einzelnen Maschinenzyklus Addition und Multiplikation gleichzeitig durchzuführen. Zirkuläre Pointer, Autoincrement Befehle und Hardware-loops dienen der schnellen Berechnung. Besonders wichtig für DSPs ist jedoch eine sehr schnelle Multiplikation, da diese sehr häufig auftritt.
+
+Spezielle Datenformate, wie z.B. das Fractional Datenformat, welches ein binäres Zahlenformat mit gedachtem Komma nach dem ersten (Vorzeichen-) bit hat, werden von DSPs intern genutzt. Je nach intern für die Berechnung genutztem Zahlenformat gibt es gängige Klassifizierungen von DSPs nach Festkommaarithmetik und Gleitkommaarithmetik DSPs.
+
+Im Gegensatz zu herkömmlichen Microprozessoren haben Digitale Signalprozessoren häufig wichtige Hardware und wichtige Interfaces mehrmals. Diese haben oft parallelen Zugriff auf Speichersysteme und Peripherie.
 
 \section{Das Kit EZ-Kit BF533}
 Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.

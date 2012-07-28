@@ -11,6 +11,6 @@
 \contentsline {subsubsection}{\numberline {5.0.1}Hall}{6}{subsubsection.5.0.1}
 \contentsline {subsubsection}{\numberline {5.0.2}K\IeC {\"u}nstlicher Hall mit Infinite Impulse Response Filter}{7}{subsubsection.5.0.2}
 \contentsline {subsubsection}{\numberline {5.0.3}Implementierung}{8}{subsubsection.5.0.3}
-\contentsline {subsubsection}{\numberline {5.0.4}Quellcode}{8}{subsubsection.5.0.4}
-\contentsline {section}{\numberline {6}Schluss}{9}{section.6}
-\contentsline {section}{\numberline {7}Literaturverzeichnis}{11}{section.7}
+\contentsline {subsubsection}{\numberline {5.0.4}Quellcode}{9}{subsubsection.5.0.4}
+\contentsline {section}{\numberline {6}Schluss}{16}{section.6}
+\contentsline {section}{\numberline {7}Literaturverzeichnis}{17}{section.7}

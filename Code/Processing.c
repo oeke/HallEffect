@@ -64,7 +64,7 @@ void  PutDAC(short,fract16);        // Data to DAC
 //                                                                          //
 //                                                                          //  
 //----------------------------------------------------------------------------
-void Process_A(void)                // (For Test Only - Talkthrough) 
+void Process_A(void)                
  { //------------------------
    
  	fIn    =   fInp_1;          // neuen Wert speichern

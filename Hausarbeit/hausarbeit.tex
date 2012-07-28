@@ -18,6 +18,10 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage[format=hang,justification=centering,singlelinecheck=off]{caption}
+%\packet für die Einfügung von Quellcode
+\usepackage{listings}
+\usepackage{color}
+
 
 %Das Paket erzeugt ein anklickbares Verzeichnis in der PDF-Datei.
 \usepackage{hyperref}
@@ -215,7 +219,8 @@ Die entspricht der Struktur eines IIR-Filters.
 Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern und so ohne Schieben damit weitergerechnet werden kann.
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
 Dieser Wert wird im Buffer abgelegt. Um das Verschieben von 4096 Werten pro Prozessaufruf zu vermeiden, das die zu lange dauern würde, wurde ein Ringspeicher realisiert. Dazu wird eine Zählvariable gespeichert die pro Prozessaufruf um 1 inkrementiert wird und den index des Buffers angibt, an dessen Stelle der neue Wert gespeichert wird. Geht der Wert der  Zählvariable über 4095 hinaus, wird die Zahl 4096 von ihr subtrahiert. Dies wurde durch eine AND-Operation mit dem Wert 0x0fff in jedem Prozessaufruf realisiert, sodass alle bits ab der Stelle 13 abgeschnitten werden.
-Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen. 
+Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen.
+\newpage
 
 Da 
 In 
@@ -225,20 +230,228 @@ In
 	\label{labelname}
 \end{figure}
 
+%%%%%%%%%Quellcode%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Quellcode}
-An diese STelle füge ich noch eine Quellcode umgebung ein
-Hier ist meine neue Zeile zum mergetest im Kapitel 5\_0\_4
+An dieser Stelle sei ein Kurzer Einblick in die wesentlichen Teiles des Quellcodes unseres Projektes geboten.
+ \\
+\newline
+Ein Array mit Koeffizienten zur Berechnung der internen Filterstruktur wird bereits in der Datei Main.c deklariert und definiert.
+\newline%
 
-jetzt aber wirklich der mergetest
-%ich muss dann oben noch \uspackage{listings} einfügen
-%\usepackage{listings}
+\lstset{% general command to set parameter(s)
+language=C,%Spache angeben
+numbers=left,%Zeilennummern anzeigen
+breaklines=true, % Zeilen werden Umgebrochen
+keywordstyle=\color{magenta}\bfseries,%keywords hervorheben
+commentstyle=\color{blue},
+identifierstyle=\color{cyan},
+stringstyle =\itshape\color{red}
+}
+\begin{lstlisting}[title=Koeffizientenarray Dekleration \& Definition in Main.c]
+fract16 fKof[11]={0.99999r16,0.693r16,0.447r16,0.268r16,0.172r16,0.138r16,0.111r16,0.093r16,0.077r16,0.066r16,0.053r16};//Koeffizienten Array 
+\end{lstlisting}
 
-%\lstset{language=<Sprache>}
-%\begin{slisting}[<Optionen>]
-%	 quellcode hier einfügen
-%\end{lstlisting}
+\newpage
+In der Datei Main.c findet sich auch, wie in jedem C-Programm, die main Funktion.
 
+\lstset{% general command to set parameter(s)
+language=C,%Spache angeben
+%[title=main-Funktion in Main.c]
+numbers=left,%Zeilennummern anzeigen
+breaklines=true, % Zeilen werden Umgebrochen
+keywordstyle=\color{magenta}\bfseries,%keywords hervorheben
+commentstyle=\color{blue},
+identifierstyle=\color{cyan},
+stringstyle =\itshape\color{red}
+}
+\begin{lstlisting}
+void main(void)
+\end{lstlisting}
+Sie beschreibt den we
+sentlichen Programmablauf. Es wird hier zunächst überprüft, ob neue Werte am Analog-Digital-Wandler (ADC) anliegen. Anschließend wird der Programm Modus ausgewählt. Dies bestimmt, wie anliegende Werte ggf. bearbeitet werden. Hierbei sind vier verschiedene Prozesse auswählbar.
 
+%\newpage
+
+\lstset{% general command to set parameter(s)
+language=C,%Spache angeben
+%title=Endlosschleife in Main.c,%Titel setzten
+numbers=left,%Zeilennummern anzeigen
+breaklines=true, % Zeilen werden Umgebrochen
+keywordstyle=\color{magenta}\bfseries,%keywords hervorheben
+commentstyle=\color{blue},
+identifierstyle=\color{cyan},
+stringstyle =\itshape\color{red}
+}
+\begin{lstlisting}[title=Endlosschleife in Main.c]
+   while(1)
+   { //--------------------------------------------------------
+     if(NewAdcData != 0)                // if new data from ADC
+      { //-----------------------------------------------------
+        NewAdcData = 0;                 // set flag back   
+        //-------------------------------------------------
+        //  Choose Type of Signal processing                 
+        //-------------------------------------------------
+        switch(PrMode) 
+         {
+           case 0: Process_A();break;   // Signal-Process-A
+           case 1: Process_B();break;   // Signal-Process-B
+           case 2: Process_C();break;   // Signal-Process-C
+           case 3: Process_D();break;   // Signal-Process-D
+          }
+        //-------------------------------------------------
+      } // end if NewAdcData
+     //----------------------------------------------------
+     if(NewTimerEvent != 0)             // if new TimerEvent
+      { //-------------------------------------------------
+        NewTimerEvent = 0;              // set flag back    
+        //-------------------------------------------------
+        Process_Tim0();
+        //-------------------------------------------------
+      }  // end if NewTimerEvent
+        //-------------------------------------------------
+   }  // end endless while-loop
+\end{lstlisting}
+
+Die Signalverarbeitung, welche den künstlichen Hall implementiert, wird im Prozess A durchgeführt. Die Prozesse B und C schleifen lediglich die Eingänge des Signalprozessors auf dessen Ausgänge durch. Diese Modi dienen der besseren Veranschaulichung bei Live-Demos.  Der Unterschied zwischen beiden Prozessen besteht darin, dass Prozess B das Signal mit einem Faktor 0,5 multipliziert und Prozess C keine interne Bearbeitung vornimmt. Legt man gemäß dem genannten Versuchsaufbau ein Audiosignal an den Eingang des Signalprozessors, so ist dieses Signal unter Nutzung des Prozess\_Modus C am Ausgang direkt zu hören. Verwendet man den Prozess\_Modus B ist das Eingangssignal am Ausgang lediglich etwas leiser zu hören. Prozess D ist nicht implementiert.
+
+\newpage
+
+\lstset{% general command to set parameter(s)
+language=C,%Spache angeben
+%title=Endlosschleife in Main.c,%Titel setzten
+numbers=left,%Zeilennummern anzeigen
+breaklines=true, % Zeilen werden Umgebrochen
+keywordstyle=\color{magenta}\bfseries,%keywords hervorheben
+commentstyle=\color{blue},
+identifierstyle=\color{cyan},
+stringstyle =\itshape\color{red}
+}
+\begin{lstlisting}[title=PROCESS\_A aus Processing.c]
+//--------------------------------------------------
+// Function:    PROCESS_A for Signal-Processing
+//--------------------------------------------------
+void Process_A(void)               
+ { //------------------------
+ 	fIn    =   fInp_1;          // neuen Wert speichern
+	
+	ip=ip&0x00000fff;			// Kreisindizierung mit 4096 indizes
+	fBuf[ip]=fIn<<15;			// 16 bit in 32 bit fract also 16 mal nach links schieben
+	    // und multiplizieren mit Faktor 0.5, also 1 mal nach rechts schieben
+	
+	fBuf[ip]+=fAcc>>2;	//Rueckkoplung mit Faktor 0.25
+	int k=0;		// Koeffizienten-Index
+
+	if(ic>4095){                // wenn Buffer gefuellt ist (buffer load > 4095
+		fAcc=0;
+		
+		fTmp_16=fKof[0];            // Koeffizient laden
+		k=ip;                       // Bufferindex relativ zum letzten Wert (hier 0)
+		k=k&0x00000fff;             // Kreisindizierung des buffers, max 4095
+		fTmp2_16=fBuf[k]>>16;       // fract32 Buffer-Wert in fract16 Variable
+		fTmp2_32=fTmp2_16*fTmp_16;  // 16 bit Multiplikation mit 32 bit Ergebniss
+		
+		fTmp2_32>>1;                /* Ergebnis muesste 1 mal links geschoben werden damit das fract32 format stimmt, aber multiplikation mit Faktor 0.25 (2mal rechts schieben) ergibt 1 mal rechts schieben
+		                             */
+		                             
+		fAcc+=fTmp2_32;             // Ergebnis akkumulieren
+
+		
+		
+		fTmp_16=fKof[1];
+		k=ip+500;               // Bufferindex relativ zum letzten Wert (hier 500)
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[2];
+		k=ip+1100;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+
+		fTmp_16=fKof[3];
+		k=ip+1800;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[4];
+		k=ip+2400;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[5];
+		k=ip+2700;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[6];
+		k=ip+3000;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[7];
+		k=ip+3250;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[8];
+		k=ip+3500;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[9];
+		k=ip+3700;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+		
+		fTmp_16=fKof[10];
+		k=ip+4000;
+		k=k&0x00000fff;
+		fTmp2_16=fBuf[k]>>16;
+		fTmp2_32=fTmp2_16*fTmp_16;
+		fTmp2_32>>1;
+		fAcc+=fTmp2_32;
+	}
+   
+	if(ic<4096){			// ic max 4095
+        ic++;			    // Buffer load erhoehen, falls nicht schon voll
+    }
+    ip++;                   // pointer auf ringbuffer erhoehen (kreisindizierung)
+	
+    fOut_1=fAcc>>16;	    // Akkumulator Wert auf beide Ausgaenge legen
+                            // 16 mal rechtsschieben, da fract32 zu fract16 konvertierung
+	fOut_2=fOut_1;
+   
+    PutDAC(DAC_1R, fOut_1); // Write DAC 1R
+    PutDAC(DAC_1L, fOut_2); // Write DAC 1L
+   //------------------------
+ }
+\end{lstlisting}
 
 \section{Schluss}
 AAAAAAAAAAAAAAAAAAAAAAAAAAAchtung, wir testen den merge!

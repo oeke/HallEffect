@@ -78,11 +78,11 @@ Sommersemester 2012}
 
 \begin{center}
 \vspace{2.0cm}
-\includegraphics[scale=0.4]{Bilder/Signalprozessor.jpg}
+\includegraphics[scale=0.1]{Bilder/Signalprozessor.jpg}
 \end{center}
 
 \begin{small}
-\vfill Florian Grützmacher \\ Max-Planck-Str. 2a \\  18059 Rostock \\  florian.gruetzmacher@uni-rostock.de\\ 
+\vfill Florian Grützmacher \\ Max-Planck-Str. 2a \\  18057 Rostock \\  florian.gruetzmacher@uni-rostock.de\\ 
 \end{small}
 
 \vspace{-1.0cm}
@@ -163,7 +163,7 @@ Die Digitale Signalverarbeitung als Teilgebiet der Nachrichtentechnik beschäfti
 Da unsere physikalische Umwelt jedoch häufig Analoge Signale als Eingangssignale (wie z.B. das Schwingen einer Membran im Mikrofon) sowie analoge Ausgangssignale (z.B. schwingende Lautsprechermembranen) verursacht, schließt die digitale Signalverarbeitung häufig auch eine Analog-Digital Wandlung des Eingangssignals und eine Digital-Analog Wandlung des Ausgangssignals mit ein.
 
 \subsection{Das Prinzip digitaler Signalverarbeitung}
-Um ein zeit-kontinuierliches und werte-kontinuierliches analoges Signal zu digitalisieren, muss es mit einer Abtastfrequenz $f_a$ abgetastet werden und auf einen quantisierten Wertebereich abgebildet werden. 
+Um ein zeit-kontinuierliches und werte-kontinuierliches analoges Signal, wie es in unserer Umwelt sehr häufig zu finden ist, zu digitalisieren muss es mit einer Abtastfrequenz $f_a$ abgetastet werden und auf einen quantisierten Wertebereich abgebildet werden. 
 Um eine "`exakte"' Signalrekonstruktion sicherzustellen, muss das Nyquist-Shannon-Abtasttheorem eingehalten werden. Dieses besagt, dass die Abtastfrequenz $f_a$ mindestens so groß sein muss wie das doppelte der höchsten im Signal vorkommenden Frequenz $f_g$.
 \begin{center}
 \fbox{$f_a >= 2*f_g$} \footnote{Abtasttheorem }\\
@@ -180,39 +180,56 @@ Um dies sicherzustellen wird das analoge Eingangssignal x(t) mittels eines analo
 %\includegraphics[scale=0.5]{Bilder/DSV_Blockschaltbild.png}
 
 
-Ein Sample and Hold Glied (S\&H) stellt sicher, dass der am Analog-Digital Wandler (A/D) anliegende Spannungswert für die Zeit eines Wandelvorgangs konstant gehalten wird.
+Ein Sampe and Hold Glied (S\&H) stellt sicher, dass der am Analog-Digital Wandler (A/D) anliegende Spannungswert für die Zeit eines Wandelvorgangs konstant gehalten wird.
 Im Anschluss an die A/D Wandlung liegt ein zeit- und werte-diskretes Signal vor. Dieses digitale Signal kann nun mittels Digitaler Signalverarbeitung (DSV) wie gewünscht manipuliert werden. Dazu werden häuftig digitale Signalprozessoren eingesetzt.
 
 Das digitale Signal muss nach der Verarbeitung erneut in ein analoges Signal gewandelt werden. Dies geschieht mithilfe des Digital-Analog Wandlers (D/A). Anschließend wird das Ausgangssignal noch durch einen analogen Rekonstruktions-Tiefpass (T/P) geglättet. Das so entstehende Ausgangssignal ist nun wieder analog und geht aus dem Eingangssignal x(t) durch digitale Signalverarbeitung hervor.
 
-\subsection{Warum Signalprozessoren?}
-Zzril delenit augue duis dolore te feugait nulla facilisi nam liber tempor. Nihil imperdiet doming; id quod mazim placerat facer possim assum? Mirum est notare quam littera gothica 
-quam nunc putamus! Consectetuer adipiscing elit sed diam nonummy nibh euismod.
+\subsection{Warum Digitale Signalprozessoren}
+Elektronische Sensoren können Signale in analoge, elektrische Signale wandeln. Digitale Signalprozessoren werden dazu genutzt, diese in Echtzeit zu verarbeiten. Dabei bietet die digitale Signalverarbeitung einige Vorteile gegenüber der analogen Signalverarbeitung.
+So lässt sich durch die Programmierbarkeit von Digitalen Signalprozessoren (DSPs) eine Vielzahl an gewünschten Effekten erzielen. Unter anderem auch solche, die in der analogen Verarbeitung nicht möglich wären.  Ein fiktives Beispiel hierfür wäre künstlicher Hall bei dem länger verzögerte Schallwellen einen größeren Einfluss auf die Rückkopplung erhalten, als die direkten Schallwellen.  Auch lässt sich das Ergebnis digitaler Signalverarbeitung sehr gut speichern, weiterverarbeiten und reproduzieren und verlustfreie Datenkompression ist möglich.
+Die Störanfälligkeit digitaler Signalverarbeitung z.B. gegenüber Alterung oder Temperatureinflüssen ist geringer als bei analoger Signalverarbeitung und das Signal/Rauschverhältnis der Signale ist in Abhängigkeit von der auf dem DSP verfügbaren Bitbreite anpassbar.
+Filtereffekte durch digitale Filter können mit sehr steilen Flanken an-/ bzw abgeschaltet werden, während analoge Filter dafür eine Übergangszeit benötigen.
+
+Neben vielen Vorteilen bringt digitale Signalverarbeitung jedoch auch Nachteile mit sich. So werden bei der Zeit- \& Amplitudenquantisierung notwendigerweise Fehler gemacht. Häufig sind einfache analoge Systeme billiger und günstiger im Energieverbrauch.
+Das größte Problem jedoch ist die Geschwindigkeit der Verarbeitung. Genauer gesagt die Zeit, die benötigt wird zur berechnung arithmetischer Funktionen für die Signalverarbeitung.
+\\
+
+Digitale Signalprozessoren sind dafür optimiert, die bei der Signalverarbeitung anfallenden Berechnungen möglichst effizient und schnell abzuarbeiten. Sie haben die Echtzeitfähigkeit der Signalverarbeitung zum Ziel. Das heißt, dass die benötigte Zeit zur Berechnung vorhersagbar ist. 
+
+Dafür haben DSPs spezielle Instruktionssätze um die arithmetischen Basisfunktionen digitaler Signalbearbeitung sehr effizient zu realisieren. So gibt es z.B. Very-Long-Instruction-Word Anweisungen oder MAC-Befehle, die es erlauben in einem einzelnen Maschinenzyklus Addition und Multiplikation gleichzeitig durchzuführen. Zirkuläre Pointer, Autoincrement Befehle und Hardware-loops dienen der schnellen Berechnung. Besonders wichtig für DSPs ist jedoch eine sehr schnelle Multiplikation, da diese sehr häufig auftritt.
+\\
+
+Spezielle Datenformate, wie z.B. das Fractional Datenformat, welches ein binäres Zahlenformat mit gedachtem Komma nach dem ersten (Vorzeichen-) bit ist, werden von DSPs intern genutzt. Je nach intern für die Berechnung genutztem Zahlenformat gibt es gängige Klassifizierungen von DSPs nach Festkommaarithmetik und Gleitkommaarithmetik DSPs.
+\\
+
+Im Gegensatz zu herkömmlichen Microprozessoren haben Digitale Signalprozessoren häufig wichtige Hardware und wichtige Interfaces mehrmals. Diese haben oft parallelen Zugriff auf Speichersysteme und Peripherie.
+
+Auch der Speicherzugriff ist bei DSPs optimiert. So sind innerhalb eines Zyklus mehrmalige Speicherzugriffe möglich.
+DSPs nutzen oft eine Harvard-Architektur mit logisch und physisch voneinander getrennten Daten- und Programmspeicher. 
+\\
+
+Alles in allem sind Digitale Signalprozessoren also spezielle, besonders auf Ihr Aufgabenfeld angepasste Prozessoren, die Berechnungsaufgaben, wie sie bei der Signalverarbeitung auftreten, besonders schnell und effizient abarbeiten können. Einfache Mikroprozessoren könnten diese Aufgaben häufig auch erledigen, bräuchten jedoch meist sehr viel mehr Zeit für die Berechnungen.
+Da die digitale Signalverarbeitung oft einen hohen Echtzeitanspruch mit sich bringt, sind DSPs nötig um den Anforderungen gerecht zu werden.
+Ihr Einsatzfeld ist sehr groß. Überall, wo digitale Signalverarbeitung im großen Stiel betrieben wird, finden sich auch DSPs. Sei es Echtzeit-Bildkomprimierung oder Mustererkennung in der Bildverarbeitung, ein Mischpult mit Effekten im Audiobereich oder im Bereich der GPS Navigation, bei Radar und Sonar. Digitale Signalprozessoren übernehmen die Berechnung der digitalen Signalverarbeitung in zahlreichen Anwendungsgebieten.
 
 \section{Das Kit EZ-Kit BF533}
 Die Software für einen künstlichen Hall wurde auf einem ADSP-BF533 EZ-KIT programmiert.
 Dabei handelt es sich um ein Evaluation Board der Firma Analog Devices, welches mit einem BlackFin 533 Signalprozessor ausgestattet ist.
 \begin{figure}[h]
-	\includegraphics[scale=1.5]{Bilder/bf533.jpg}
-	\caption{EZ-KIT BF533}
+	\includegraphics[scale=0.5]{Bilder/bf533.jpg}
+	\caption{Raumimpulsantwort}
 	\label{labelname}
 \end{figure}
-Um für den BF533 zu programmieren wurde die IDE VisualDSP++ 5.0 verwendet.
+Um für den BF533 zu programmieren wurde das IDE VisualDSP++ 5.0.
 Die Implementierung erfolgte mit C.
-\begin{figure}[h]
-	\includegraphics[scale=0.4]{Bilder/visualdsp50.png}
-	\caption{VisualDSP++5.0}
-	\label{labelname}
-\end{figure}
-Der BF533 Signalprozessor arbeitet mit einer Maximalen Taktrate von 750 MHz und besitzt 148 KB Flash Speicher. Außerdem ist er mit einem 16 Bit externem Bus vershen, sowie 12 DMAs und 3 Timer. der BF533 arbeitet mit 16 oder 32 Bit Befehlen und mit einem 16 oder 32 Bit Fixed-Point Format in Form von Integer oder Fractional. Abbildung x zeigt ein Blockdiagramm des BF533.
 
-\begin{figure}[h]
-	\includegraphics[scale=0.5]{Bilder/bf533block.png}
-	\caption{Blockdiagramm eines BF533}
-	\label{labelname}
-\end{figure}
 
 \section{Lösungsstrategie}
+Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
+
+Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
+
 \subsection{Hall}
 Hall bzw. Nachhall ist ein Effekt der durch kontinuierliche Reflexionen einer Schallwelle verursacht wird.
 Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die reflektierten Wellen haben unterschiedliche Ankunftszeiten aufgrund der verschiedenen Abstände zu den reflektierenden Objekten, treffen mehrere reflektierte Schallwellen der selben Ursprungs-Schallwelle mit verschiedenen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je weiter der Zeitpunkt ihrer Enstehung zurückliegt.
@@ -221,9 +238,10 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/raumimpulsantwort.jpg}
-	\caption{Raumimpulsantwort - Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15}
+	\caption{Raumimpulsantwort}
 	\label{labelname}
 \end{figure}
+Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15
 
 \subsection{Künstlicher Hall mit Infinite Impulse Response Filter}
 Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden, um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
@@ -506,7 +524,6 @@ Aus Zeitlichen Gründen sind wir jedoch leider dazu nicht mehr in der Lage gewes
  \begin{itemize} 
 \item lsf.uni-rostock.de, Veranstaltungsnummer 24141, Vorlesung Signalprozessortechnik, SS 2012
 \item Vorlesungsskript Signalprozessortechnik, SS2012
-\item Blackfin-Family.pdf - Signalprozessortechnik, SS2012
 \item Versuchsanleitung Nr. 2 "`Digitale Filter"', Praktikum zur Veranstaltung "`Digitale Signalverarbeitung"' Institut für Nachrichtentechnik, Universität Rostock
 \end{itemize}
 

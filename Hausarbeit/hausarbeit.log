@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.31)  28 JUL 2012 12:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.31)  28 JUL 2012 12:45
 entering extended mode
  %&-line parsing enabled.
 **hausarbeit.tex
@@ -752,7 +752,7 @@ File: Bilder/signalabgriffe.png Graphic file (type png)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8 <./Bilder/iir.png (PNG copy)>] [9 <./Bilder/signalabgriffe.png>] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 255--257
+Underfull \hbox (badness 10000) in paragraph at lines 259--261
 
  []
 
@@ -788,9 +788,9 @@ r/jknappen/ec/ecrm1200.600pk> </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen
 texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texliv
 e/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb>
-Output written on hausarbeit.pdf (11 pages, 226691 bytes).
+Output written on hausarbeit.pdf (11 pages, 227092 bytes).
 PDF statistics:
- 494 PDF objects out of 1000 (max. 8388607)
+ 495 PDF objects out of 1000 (max. 8388607)
  34 named destinations out of 1000 (max. 500000)
  151 words of extra memory for PDF output out of 10000 (max. 10000000)
 

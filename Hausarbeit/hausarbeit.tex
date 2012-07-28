@@ -78,11 +78,11 @@ Sommersemester 2012}
 
 \begin{center}
 \vspace{2.0cm}
-\includegraphics[scale=0.1]{Bilder/Signalprozessor.jpg}
+\includegraphics[scale=0.4]{Bilder/Signalprozessor.jpg}
 \end{center}
 
 \begin{small}
-\vfill Florian Grützmacher \\ Max-Planck-Str. 2a \\  18057 Rostock \\  florian.gruetzmacher@uni-rostock.de\\ 
+\vfill Florian Grützmacher \\ Max-Planck-Str. 2a \\  18059 Rostock \\  florian.gruetzmacher@uni-rostock.de\\ 
 \end{small}
 
 \vspace{-1.0cm}
@@ -180,7 +180,7 @@ Um dies sicherzustellen wird das analoge Eingangssignal x(t) mittels eines analo
 %\includegraphics[scale=0.5]{Bilder/DSV_Blockschaltbild.png}
 
 
-Ein Sampe and Hold Glied (S\&H) stellt sicher, dass der am Analog-Digital Wandler (A/D) anliegende Spannungswert für die Zeit eines Wandelvorgangs konstant gehalten wird.
+Ein Sample and Hold Glied (S\&H) stellt sicher, dass der am Analog-Digital Wandler (A/D) anliegende Spannungswert für die Zeit eines Wandelvorgangs konstant gehalten wird.
 Im Anschluss an die A/D Wandlung liegt ein zeit- und werte-diskretes Signal vor. Dieses digitale Signal kann nun mittels Digitaler Signalverarbeitung (DSV) wie gewünscht manipuliert werden. Dazu werden häuftig digitale Signalprozessoren eingesetzt.
 
 Das digitale Signal muss nach der Verarbeitung erneut in ein analoges Signal gewandelt werden. Dies geschieht mithilfe des Digital-Analog Wandlers (D/A). Anschließend wird das Ausgangssignal noch durch einen analogen Rekonstruktions-Tiefpass (T/P) geglättet. Das so entstehende Ausgangssignal ist nun wieder analog und geht aus dem Eingangssignal x(t) durch digitale Signalverarbeitung hervor.
@@ -193,19 +193,26 @@ quam nunc putamus! Consectetuer adipiscing elit sed diam nonummy nibh euismod.
 Die Software für einen künstlichen Hall wurde auf einem ADSP-BF533 EZ-KIT programmiert.
 Dabei handelt es sich um ein Evaluation Board der Firma Analog Devices, welches mit einem BlackFin 533 Signalprozessor ausgestattet ist.
 \begin{figure}[h]
-	\includegraphics[scale=0.5]{Bilder/bf533.jpg}
-	\caption{Raumimpulsantwort}
+	\includegraphics[scale=1.5]{Bilder/bf533.jpg}
+	\caption{EZ-KIT BF533}
 	\label{labelname}
 \end{figure}
-Um für den BF533 zu programmieren wurde das IDE VisualDSP++ 5.0.
+Um für den BF533 zu programmieren wurde die IDE VisualDSP++ 5.0 verwendet.
 Die Implementierung erfolgte mit C.
+\begin{figure}[h]
+	\includegraphics[scale=0.4]{Bilder/visualdsp50.png}
+	\caption{VisualDSP++5.0}
+	\label{labelname}
+\end{figure}
+Der BF533 Signalprozessor arbeitet mit einer Maximalen Taktrate von 750 MHz und besitzt 148 KB Flash Speicher. Außerdem ist er mit einem 16 Bit externem Bus vershen, sowie 12 DMAs und 3 Timer. der BF533 arbeitet mit 16 oder 32 Bit Befehlen und mit einem 16 oder 32 Bit Fixed-Point Format in Form von Integer oder Fractional. Abbildung x zeigt ein Blockdiagramm des BF533.
 
+\begin{figure}[h]
+	\includegraphics[scale=0.5]{Bilder/bf533block.png}
+	\caption{Blockdiagramm eines BF533}
+	\label{labelname}
+\end{figure}
 
 \section{Lösungsstrategie}
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
-
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
-
 \subsection{Hall}
 Hall bzw. Nachhall ist ein Effekt der durch kontinuierliche Reflexionen einer Schallwelle verursacht wird.
 Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die reflektierten Wellen haben unterschiedliche Ankunftszeiten aufgrund der verschiedenen Abstände zu den reflektierenden Objekten, treffen mehrere reflektierte Schallwellen der selben Ursprungs-Schallwelle mit verschiedenen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je weiter der Zeitpunkt ihrer Enstehung zurückliegt.
@@ -214,10 +221,9 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/raumimpulsantwort.jpg}
-	\caption{Raumimpulsantwort}
+	\caption{Raumimpulsantwort - Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15}
 	\label{labelname}
 \end{figure}
-Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15
 
 \subsection{Künstlicher Hall mit Infinite Impulse Response Filter}
 Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden, um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
@@ -500,6 +506,7 @@ Aus Zeitlichen Gründen sind wir jedoch leider dazu nicht mehr in der Lage gewes
  \begin{itemize} 
 \item lsf.uni-rostock.de, Veranstaltungsnummer 24141, Vorlesung Signalprozessortechnik, SS 2012
 \item Vorlesungsskript Signalprozessortechnik, SS2012
+\item Blackfin-Family.pdf - Signalprozessortechnik, SS2012
 \item Versuchsanleitung Nr. 2 "`Digitale Filter"', Praktikum zur Veranstaltung "`Digitale Signalverarbeitung"' Institut für Nachrichtentechnik, Universität Rostock
 \end{itemize}
 

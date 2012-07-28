@@ -42,6 +42,12 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
+\addtokomafont{disposition}{\color{blue}}
+%alle Überschriften und Sectionziffern einfärben
+
+%\pagecolor{cyan}
+%Seitenhintergrundfarbe bestimmen
+
 %-------------------
 %Ende des Kopfbereiches
 %-------------------
@@ -65,7 +71,7 @@ Sommersemester 2012}
 \begin{center}
 \begin{Large}
 \vfill {\textsf{\textbf{
-	Hausarbeit - Hall-Software für das EZ-Kit BF533
+	\textcolor{blue}{Hausarbeit - Hall-Software für das EZ-Kit BF533}
 }}}
 \end{Large}
 \end{center}
@@ -325,7 +331,9 @@ stringstyle =\itshape\color{red}
       }  // end if NewTimerEvent
         //-------------------------------------------------
    }  // end endless while-loop
-\end{lstlisting}
+\end{lstlisting}%
+.
+\\
 
 Die Signalverarbeitung, welche den künstlichen Hall implementiert, wird im Prozess A durchgeführt. Die Prozesse B und C schleifen lediglich die Eingänge des Signalprozessors auf dessen Ausgänge durch. Diese Modi dienen der besseren Veranschaulichung bei Live-Demos.  Der Unterschied zwischen beiden Prozessen besteht darin, dass Prozess B das Signal mit einem Faktor 0,5 multipliziert und Prozess C keine interne Bearbeitung vornimmt. Legt man gemäß dem genannten Versuchsaufbau ein Audiosignal an den Eingang des Signalprozessors, so ist dieses Signal unter Nutzung des Prozess\_Modus C am Ausgang direkt zu hören. Verwendet man den Prozess\_Modus B ist das Eingangssignal am Ausgang lediglich etwas leiser zu hören. Prozess D ist nicht implementiert.
 

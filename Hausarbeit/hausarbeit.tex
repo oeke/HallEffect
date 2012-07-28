@@ -72,14 +72,14 @@ Sommersemester 2012}
 
 \begin{center}
 \vspace{2.0cm}
-\includegraphics[scale=0.8]{Bilder/Versuchsaufbau_Demonstration.png}
+\includegraphics[scale=0.1]{Bilder/Signalprozessor.jpg}
 \end{center}
 
 \begin{small}
 \vfill Florian Grützmacher \\ Max-Planck-Str. 2a \\  18057 Rostock \\  florian.gruetzmacher@uni-rostock.de\\ 
 \end{small}
 
-\vspace{-5.0cm}
+\vspace{-1.0cm}
 
 \begin{small}
 \vfill Simeon Wiedenmann \\ Kiebitzberg 4 \\  18057 Rostock \\  simeon.wiedenmann@uni-rostock.de\\ 
@@ -193,7 +193,7 @@ Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend opti
 
 Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
 
-\subsubsection{Hall}
+\subsection{Hall}
 Hall bzw. Nachhall ist ein Effekt der durch kontinuierliche Reflexionen einer Schallwelle verursacht wird.
 Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die reflektierten Wellen haben unterschiedliche Ankunftszeiten aufgrund der verschiedenen Abstände zu den reflektierenden Objekten, treffen mehrere reflektierte Schallwellen der selben Ursprungs-Schallwelle mit verschiedenen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je weiter der Zeitpunkt ihrer Enstehung zurückliegt.
 Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprungssignals sind, und diffusem Nachhall, welcher aus vielen Reflektionen mit stärkerer Abschwächung des Ursprungssignals besteht. Verantwortlich für den 'räumlichen' Klang des Halls, sind die frühen Reflektionen, wobei der Nachhall wiederum aus Reflektionen der frühen Reflektionen entsteht und für mehr 'Volumen' sorgt.
@@ -206,7 +206,7 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 \end{figure}
 Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15
 
-\subsubsection{Künstlicher Hall mit Infinite Impulse Response Filter}
+\subsection{Künstlicher Hall mit Infinite Impulse Response Filter}
 Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden, um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
 Dies entspricht der Struktur eines IIR-Filters mit unendlicher Impulsantwort.
 \begin{figure}[h]
@@ -215,7 +215,7 @@ Dies entspricht der Struktur eines IIR-Filters mit unendlicher Impulsantwort.
 	\label{labelnameIIR-Filter Struktur}
 \end{figure}
 
-\subsubsection{Implementierung}
+\subsection{Implementierung}
 Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern und so ohne Schieben damit weitergerechnet werden kann.
 <<<<<<< HEAD
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
@@ -246,7 +246,7 @@ Der Akkumulator wird ebenfalls beim nächsten Aufruf des Prozess mit dem Faktor 
 Weiterhin ist darauf zu achten das die Opperation des Akkumulierens nicht stattfinden kann, wenn der Buffer noch nicht komplett gefüllt ist. Es wurde eine Load-Variable deklariert welche mit jedem Prozessaufruf inkrementiert wird. Bei jedem Prozessdurchlauf wird getestet ob diese den Wert 4095 übersteigt, wenn ja wird sie nicht weiter inkrementiert und die Akkumulation wird vorgenommen.
 
 %%%%%%%%%Quellcode%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Quellcode}
+\subsection{Quellcode}
 An dieser Stelle sei ein Kurzer Einblick in die wesentlichen Teiles des Quellcodes unseres Projektes geboten.
  \\
 \newline
@@ -469,26 +469,33 @@ void Process_A(void)
 \end{lstlisting}
 
 \section{Schluss}
-AAAAAAAAAAAAAAAAAAAAAAAAAAAchtung, wir testen den merge!
+Das Projekt "`Künstlicher Hall"' ist eine gelungene Zusammenfassung der Lerninhalte aus dem Modul Signalprozessortechnik.
+Durch die Arbeit am Projekt ist es uns gelungen das Verständnis für die Feinheiten digitaler Signalverarbeitung mit Signalprozessoren zu vertiefen. Es galt die Schwerpunkte der Digitalen Signalverarbeitung, insbesondere im Bereich der digitalen Filter, mit den Finessen und Echtzeitproblematiken von Signalprozessoren unter einen Hut zu bringen. Dies ist uns im vorgestellten Projekt meiner Meinung nach erfolgreich geglückt.
 
+Das Vorgegebene Framework war hierzu eine sehr große Stütze. Es erlaubte es uns, unsere Konzentration ganz auf den Schwerpunkt der Hall-Erzeugung zu legen. Die Auseinandersetzung mit dem Thema Hall führe zudem zu noch besserem Verständnis für die digitalen Filterstrukturen FIR \& IIR.
+\\
 
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
+Am Ende des Projektes bleibt nun noch die Präsentation für die anderen Teilnehmer des Moduls Signalprozessortechnik. Wir hoffen diese mit unserem Projekt begeistern zu können.
+\\
 
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
+Natürlich bietet solch ein Projekt stets enormes Potential die Arbeit daran noch viel länger fortzusetzen. Denkbar wären u.a. verschiedene Hall-Effekte. So könnte man Hall Implementieren, welcher stark an Hall erinnert, den man aus kleinen Badewannen-Zimmern kennt, oder gar Hall wie er in großen Kirchenräumen zu finden ist. Durch Variation der Anzahl an Zurückgeführter Koeffizienten und natürlich auch Variation der Koeffizienten selbst eröffnet sich hierbei ein enormer Bereich an denkbaren Möglichkeiten und Erweiterungen.
 
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
-
-Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.
+Besonders im Bezug auf Signalprozessoren bietet sich natürlich die Möglichkeit den geschriebenen Code zu Optimieren. Schleifen, If-Anweisungen und Funktionsaufrufe könnten im Assembler-Sprache programmiert und effizienz-technisch optimiert werden.
+Hier bietet sich noch viel Potential die Echtzeitfähigkeit des Systems zu steigern und die benötigte Zeit zur Signalverarbeitung zu reduzieren.
+Aus Zeitlichen Gründen sind wir jedoch leider dazu nicht mehr in der Lage gewesen. So haben wir uns auf die Funktionalität eines ersten, präsentierfähigen Halls beschränkt und freuen uns schon auf die Präsentation der Projekte vor allen Modulteilnehmern.
 
 %Beginn einer neuen Seite
 \clearpage
 
 \section{Literaturverzeichnis}
+\vspace{1.5cm}
+ %Eine einfache Liste
+ \begin{itemize} 
+\item lsf.uni-rostock.de, Veranstaltungsnummer 24141, Vorlesung Signalprozessortechnik, SS 2012
+\item Vorlesungsskript Signalprozessortechnik, SS2012
+\item Versuchsanleitung Nr. 2 "`Digitale Filter"', Praktikum zur Veranstaltung "`Digitale Signalverarbeitung"' Institut für Nachrichtentechnik, Universität Rostock
+\end{itemize}
 
-lsf.uni-rostock.de, Veranstaltungsnummer 24141, Vorlesung Signalprozessortechnik, SS 2012
-\newline
-
-Versuchsanleitung Nr. 2 "`Digitale Filter"', Praktikum zur Veranstaltung "`Digitale Signalverarbeitung"' Institut für Nachrichtentechnik, Universität Rostock
 
 
 

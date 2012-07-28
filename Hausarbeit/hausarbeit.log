@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.31)  28 JUL 2012 12:45
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.26)  28 JUL 2012 14:06
 entering extended mode
  %&-line parsing enabled.
 **hausarbeit.tex
@@ -528,17 +528,7 @@ Package: geometry 2008/12/21 v4.2 Page Geometry
 \Gm@odd@mp=\dimen119
 \Gm@even@mp=\dimen120
 \Gm@dimlist=\toks18
-) (./hausarbeit.aux
-
-LaTeX Warning: Label `labelname' multiply defined.
-
-
-LaTeX Warning: Label `labelname' multiply defined.
-
-
-LaTeX Warning: Label `labelname' multiply defined.
-
-)
+) (./hausarbeit.aux)
 \openout1 = `hausarbeit.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
@@ -555,7 +545,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
- (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count105
 \scratchdimen=\dimen121
@@ -634,7 +624,7 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 65.
 (/usr/share/texmf-texlive/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<Bilder/Versuchsaufbau_Demonstration.png, id=63, 266.9975pt x 106.3975pt>
+<Bilder/Versuchsaufbau_Demonstration.png, id=43, 266.9975pt x 106.3975pt>
 File: Bilder/Versuchsaufbau_Demonstration.png Graphic file (type png)
 
 <use Bilder/Versuchsaufbau_Demonstration.png>
@@ -650,39 +640,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--85
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Bilder/Versuchsaufbau_De
-monstration.png>] (./hausarbeit.toc
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 2.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 4.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 6.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 9.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 10.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 15.
-Class scrartcl Info: You've told me to use the font selection of the element
-(scrartcl)           `sectioning' that is an alias of element `disposition'
-(scrartcl)            on input line 16.
-)
+monstration.png>] (./hausarbeit.toc)
 \tf@toc=\write4
 \openout4 = `hausarbeit.toc'.
 
  [2]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 104.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 104.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 104.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 104.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -704,7 +672,7 @@ d-ul-teil-nehmern vorzustellen
 [3
 
 ]
-<Bilder/Versuchsaufbau_Implementation.png, id=106, 274.02374pt x 126.4725pt>
+<Bilder/Versuchsaufbau_Implementation.png, id=70, 274.02374pt x 126.4725pt>
 File: Bilder/Versuchsaufbau_Implementation.png Graphic file (type png)
 
 <use Bilder/Versuchsaufbau_Implementation.png>
@@ -717,7 +685,7 @@ l-ten wer-den. Dieses
  []
 
 [4 <./Bilder/Versuchsaufbau_Implementation.png>]
-<Bilder/DSV_Blockschaltbild.png, id=113, 818.05624pt x 95.35625pt>
+<Bilder/DSV_Blockschaltbild.png, id=77, 818.05624pt x 95.35625pt>
 File: Bilder/DSV_Blockschaltbild.png Graphic file (type png)
 
 <use Bilder/DSV_Blockschaltbild.png>
@@ -731,7 +699,7 @@ ers (D/A). An-schlieÿend
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 192.
 
-[6] <Bilder/raumimpulsantwort.jpg, id=127, 702.625pt x 554.07pt>
+[6] <Bilder/raumimpulsantwort.jpg, id=92, 702.625pt x 554.07pt>
 File: Bilder/raumimpulsantwort.jpg Graphic file (type jpg)
 
 <use Bilder/raumimpulsantwort.jpg>
@@ -740,19 +708,16 @@ Overfull \hbox (18.55518pt too wide) in paragraph at lines 203--204
 &t=43975&start=15 
  []
 
-<Bilder/iir.png, id=128, 822.07124pt x 199.74625pt>
+<Bilder/iir.png, id=93, 822.07124pt x 199.74625pt>
 File: Bilder/iir.png Graphic file (type png)
  <use Bilder/iir.png>
 [7 <./Bilder/raumimpulsantwort.jpg>]
-<Bilder/signalabgriffe.png, id=135, 662.475pt x 397.485pt>
+<Bilder/signalabgriffe.png, id=101, 662.475pt x 397.485pt>
 File: Bilder/signalabgriffe.png Graphic file (type png)
 
-<use Bilder/signalabgriffe.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[8 <./Bilder/iir.png (PNG copy)>] [9 <./Bilder/signalabgriffe.png>] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 259--261
+<use Bilder/signalabgriffe.png> [8 <./Bilder/iir.png (PNG copy)>] [9 <./Bilder/
+signalabgriffe.png>] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
 
  []
 
@@ -760,14 +725,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 259--261
 
 ] (./hausarbeit.aux)
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 7393 strings out of 495061
- 110748 string characters out of 1182621
- 209850 words of memory out of 3000000
- 10415 multiletter control sequences out of 15000+50000
+ 7387 strings out of 495061
+ 110645 string characters out of 1182621
+ 210850 words of memory out of 3000000
+ 10409 multiletter control sequences out of 15000+50000
  14817 words of font info for 34 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  43i,8n,43p,632b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -777,20 +742,20 @@ st, replaced by a fixed one
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
- </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/ko
-bold/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/kobold/.texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecsx1440.600pk> </home/kobold/.texmf-var/font
-s/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/kobold/.texmf-var/fonts/pk/ljfou
-r/jknappen/ec/ecrm1200.600pk> </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen
-/ec/ecsx1200.600pk> </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx17
-28.600pk> </home/kobold/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk><
-/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
-texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texliv
-e/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb>
-Output written on hausarbeit.pdf (11 pages, 227092 bytes).
+ </home/flo/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1200.600pk> </home/flo/.
+texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/flo/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/flo/.texmf-var/fonts/pk/ljfour/
+jknappen/ec/ecsx1440.600pk> </home/flo/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
+crm0800.600pk> </home/flo/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk
+> </home/flo/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1728.600pk> </home/flo/
+.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk></usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cms
+y10.pfb>
+Output written on hausarbeit.pdf (11 pages, 218939 bytes).
 PDF statistics:
- 495 PDF objects out of 1000 (max. 8388607)
+ 450 PDF objects out of 1000 (max. 8388607)
  34 named destinations out of 1000 (max. 500000)
- 151 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 111 words of extra memory for PDF output out of 10000 (max. 10000000)
 

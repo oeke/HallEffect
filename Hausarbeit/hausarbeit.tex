@@ -191,7 +191,7 @@ Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend opti
 
 \subsubsection{Hall}
 Hall bzw. Nachhall ist ein Effekt kontinuierlicher Reflexionen einer Schallwelle.
-Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die Reflektierten Wellen, haben unterschiedliche laufzeiten aufgrund der unterschiedlichen Abstände zu den reflektierenden Objekten, treffen mehrere Reflektierte Schallwellen, der selben Ursprungs-Schallwelle mit unterschiedlichen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je länger der Zeitpunkt ihrer Enstehung zurückliegt.
+Wird eine Schallwelle an unterschiedlichen Stellen Reflektiert, und die Reflektierten Wellen haben unterschiedliche laufzeiten aufgrund der unterschiedlichen Abstände zu den reflektierenden Objekten, treffen mehrere Reflektierte Schallwellen, der selben Ursprungs-Schallwelle mit unterschiedlichen Verzögerungszeiten aufeinander. Da der Schalldruck einer Schallwelle mit zunehmender Ausbreitungszeit aufgrund Luftreibung und mit zunehmender Anzahl an Reflektionen aufgrund von Wärmeverlusten abnimmt, sind reflektierte Schallwellen umso schwächer, je länger der Zeitpunkt ihrer Enstehung zurückliegt.
 Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprungssignals sind, und diffusem Nachhall, welcher aus vielen Reflektionen mit stärkerer Abschwächung des Ursprungssignals besteht. Verantwortlich für den 'räumlichen' klang des Halls, sind die frühen Reflektionen, wobei der Nachhall wiederum aus Reflektionen der frühen Reflektionen entsteht und für mehr 'Volumen' sorgt.
 
 
@@ -203,8 +203,8 @@ Hall wird unterteilt in frühe Reflektionen, welche 1-2 Reflektionen des Ursprun
 Quelle: http://www.offsetguitars.com/forums/viewtopic.php?f=11\&t=43975\&start=15
 
 \subsubsection{Künstlicher Hall mit Infinite Impulse Response Filter}
-Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
-Die entspricht der Struktur eines IIR-Filters.
+Um mit dem DSP künstlichen Hall zu erzeugen, müssen die vom AD-Wandler erhaltenen Werte in einem Buffer gespeichert werden, um zu einem späteren Zeitpunkt (50 bis 100 ms) darauf zurückgreifen zu können. Jeder neu abgetastete Wert wird mit einem Vorfaktor versehen und mit weiter zurückliegenden Signalwerten, ebenfalls mit bestimmtem Vorfaktoren akkumuliert und an den DA-Wandler übergeben. Zusätlich wird der akkumulierte Wert wieder mit einem Vorfaktor auf den nächsten neuen Wert aufaddiert. Durch die Akkumulation werden die frühen Reflektionen, durch die Rückkopplung der Nachhall simuliert. 
+Die entspricht der Struktur eines IIR-Filters mit unendlicher Impulsantwort.
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/iir.png}
 	\caption{IIR-Filter Struktur}
@@ -212,15 +212,16 @@ Die entspricht der Struktur eines IIR-Filters.
 \end{figure}
 
 \subsubsection{Implementierung}
-Testzeile zum mergen
-
 Um eine IIR-Struktur zu implementieren, haben wir einen Buffer(Array) mit 4096 Werten im fractional-32 Format deklariert. Für den Buffer und den Akkumulator wurden Fractional-32 Formate benutzt, da Multiplikationen von Fractional-16 Werten, ein Fractional-32 liefern und so ohne Schieben damit weitergerechnet werden kann.
 Sobald am AD-Wandler ein neuer Wert anliegt, wird die Prozess-Funktion, im folgenden Prozess genannt, aufgerufen. Im Prozess wird der neue Wert zunächst gespeichert und mit einem dem Vorfaktor 0.5 im Buffer abgelegt. der Vorfaktor wird durch ein Right-Shift realisiert, was einer Division durch 2 entspricht.
 Dieser Wert wird im Buffer abgelegt. Um das Verschieben von 4096 Werten pro Prozessaufruf zu vermeiden, das die zu lange dauern würde, wurde ein Ringspeicher realisiert. Dazu wird eine Zählvariable gespeichert die pro Prozessaufruf um 1 inkrementiert wird und den index des Buffers angibt, an dessen Stelle der neue Wert gespeichert wird. Geht der Wert der  Zählvariable über 4095 hinaus, wird die Zahl 4096 von ihr subtrahiert. Dies wurde durch eine AND-Operation mit dem Wert 0x0fff in jedem Prozessaufruf realisiert, sodass alle bits ab der Stelle 13 abgeschnitten werden.
-Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen. 
-
-Da 
-In 
+Wurde der neue Wert im Buffer gespeichert, wird nun der Akkumulator geladen, indem einzelne Abgriffe des Buffers mit Koeffizienten multipliziert und auf den Akkumulator addiert werden. Welche Stellen des Buffers und die zugehörigen Koeffizienten gewählt wurden kann man in Abbildung 4 erkennen.
+Da wir mit einem Ringspeicher arbeiten, sind die Indizes der Abgriffe zwar konstant, jedoch relativ zum Index des neuen Wertes. Auch hier wurde mit einer AND-Operation mit 0x0fff gearbeitet, damit der index bis maximal 4095 geht und dann von 0 fortsetzt.
+Zur Berechnung der Koeffizienten wurde eine Exponentialfunktion zur Basis e folgender Form gewählt: k=exp(-3/4096*i) wobei i der index des Abgriffes und k der resultierende koeffizient ist.
+Beim Multiplizieren eines Abgriffes mit einem Koeffizienten wird außerdem das Ergniss durch 4 geteilt um eine Übersteuerung zu vermeiden. Realisiert wurde das durch ein 2-fachen Right-Shift.
+Am ende des Prozesses wird der Akkumulator an den Ausgang übergeben, welcher weiter an den DA-Wandler gegeben wird. Dabei ist darauf zu achten den Akkumulator durch ein 16-fachen Right-Shift für ein fractional-16 format zu konvertieren.
+Der Akkumulator wird ebenfalls beim nächsten Aufruf des Prozess mit dem Faktor 0.25, also zweimaligem Right-Shift auf den nächsten neuen Wert addiert, um die Rückkopplung zu realisiern.
+Weiterhin ist darauf zu achten das die Opperation des Akkumulierens nicht stattfinden kann, wenn der Buffer noch nicht komplett gefüllt ist. Es wurde eine Load-Variable deklariert welche mit jedem Prozessaufruf inkrementiert wird. Bei jedem Prozessdurchlauf wird getestet ob diese den Wert 4095 übersteigt, wenn ja wird sie nicht weiter inkrementiert und die Akkumulation wird vorgenommen.
 \begin{figure}[h]
 	\includegraphics[scale=0.5]{Bilder/signalabgriffe.png}
 	\caption{Raumimpulsantwort}

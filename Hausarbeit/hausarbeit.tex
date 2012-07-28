@@ -163,7 +163,7 @@ Die Digitale Signalverarbeitung als Teilgebiet der Nachrichtentechnik beschäfti
 Da unsere physikalische Umwelt jedoch häufig Analoge Signale als Eingangssignale (wie z.B. das Schwingen einer Membran im Mikrofon) sowie analoge Ausgangssignale (z.B. schwingende Lautsprechermembranen) verursacht, schließt die digitale Signalverarbeitung häufig auch eine Analog-Digital Wandlung des Eingangssignals und eine Digital-Analog Wandlung des Ausgangssignals mit ein.
 
 \subsection{Das Prinzip digitaler Signalverarbeitung}
-Um ein zeit-kontinuierliches und werte-kontinuierliches analoges Signal zu digitalisieren, muss es mit einer Abtastfrequenz $f_a$ abgetastet werden und auf einen quantisierten Wertebereich abgebildet werden. 
+Um ein zeit-kontinuierliches und werte-kontinuierliches analoges Signal, wie es in unserer Umwelt sehr häufig zu finden ist, zu digitalisieren muss es mit einer Abtastfrequenz $f_a$ abgetastet werden und auf einen quantisierten Wertebereich abgebildet werden. 
 Um eine "`exakte"' Signalrekonstruktion sicherzustellen, muss das Nyquist-Shannon-Abtasttheorem eingehalten werden. Dieses besagt, dass die Abtastfrequenz $f_a$ mindestens so groß sein muss wie das doppelte der höchsten im Signal vorkommenden Frequenz $f_g$.
 \begin{center}
 \fbox{$f_a >= 2*f_g$} \footnote{Abtasttheorem }\\
@@ -185,9 +185,14 @@ Im Anschluss an die A/D Wandlung liegt ein zeit- und werte-diskretes Signal vor.
 
 Das digitale Signal muss nach der Verarbeitung erneut in ein analoges Signal gewandelt werden. Dies geschieht mithilfe des Digital-Analog Wandlers (D/A). Anschließend wird das Ausgangssignal noch durch einen analogen Rekonstruktions-Tiefpass (T/P) geglättet. Das so entstehende Ausgangssignal ist nun wieder analog und geht aus dem Eingangssignal x(t) durch digitale Signalverarbeitung hervor.
 
-\subsection{Warum Signalprozessoren?}
-Zzril delenit augue duis dolore te feugait nulla facilisi nam liber tempor. Nihil imperdiet doming; id quod mazim placerat facer possim assum? Mirum est notare quam littera gothica 
-quam nunc putamus! Consectetuer adipiscing elit sed diam nonummy nibh euismod.
+\subsection{Warum Digitale Signalprozessoren}
+Elektronische Sensoren können Signale in analoge, elektrische Signale wandeln. Digitale Signalprozessoren werden dazu genutzt, diese in Echtzeit zu verarbeiten. Dabei bietet die digitale Signalverarbeitung einige Vorteile gegenüber der analogen Signalverarbeitung.
+So lässt sich durch die Programmierbarkeit von Digitalen Signalprozessoren (DSPs) eine Vielzahl an gewünschten Effekten erzielen. Unter anderem auch solche, die in der analogen Verarbeitung nicht möglich wären.  Ein fiktives Beispiel hierfür wäre künstlicher Hall bei dem länger verzögerte Schallwellen einen größeren Einfluss auf die Rückkopplung erhalten, als die direkten Schallwellen.  Auch lässt sich das Ergebnis digitaler Signalverarbeitung sehr gut speichern, weiterverarbeiten und reproduzieren und verlustfreie Datenkompression ist möglich.
+Die Störanfälligkeit digitaler Signalverarbeitung z.B. gegenüber Alterung oder Temperatureinflüssen ist geringer als bei analoger Signalverarbeitung und das Signal/Rauschverhältnis der Signale ist in Abhängigkeit von der auf dem DSP verfügbaren Bitbreite anpassbar.
+Filtereffekte durch digitale Filter können mit sehr steilen Flanken an-/ bzw abgeschaltet werden, während analoge Filter dafür eine Übergangszeit benötigen.
+
+Neben vielen Vorteilen bringt digitale Signalverarbeitung jedoch auch Probleme mit sich. So werden bei der Zeit- \& Amplitudenquantisierung notwendigerweise Fehler gemacht.
+Häufig sind einfache analoge Systeme billiger und günstiger im Energieverbrauch.
 
 \section{Das Kit EZ-Kit BF533}
 Dolore te feugait nulla facilisi nam liber tempor cum soluta nobis eleifend option. Amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet. In iis qui facit eorum; claritatem Investigationes demonstraverunt lectores legere me. In vulputate velit esse molestie consequat vel illum dolore. Wisi enim ad minim, veniam quis nostrud exerci. Facer possim assum typi non habent claritatem insitam est usus legentis lius quod.

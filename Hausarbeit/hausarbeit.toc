@@ -1,0 +1,15 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Einleitung}{3}{section.1}
+\contentsline {section}{\numberline {2}Aufgabenstellung}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Hall-Software f\IeC {\"u}r das EZ-Kit BF533}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Versuchsaufbau}{4}{subsection.2.2}
+\contentsline {section}{\numberline {3}Digitale Signalverarbeitung}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}Das Prinzip digitaler Signalverarbeitung}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Warum Signalprozessoren?}{5}{subsection.3.2}
+\contentsline {section}{\numberline {4}Das Kit EZ-Kit BF533}{6}{section.4}
+\contentsline {section}{\numberline {5}L\IeC {\"o}sungsstrategie}{6}{section.5}
+\contentsline {subsubsection}{\numberline {5.0.1}Hall}{6}{subsubsection.5.0.1}
+\contentsline {subsubsection}{\numberline {5.0.2}K\IeC {\"u}nstlicher Hall mit Infinite Impulse Response Filter}{7}{subsubsection.5.0.2}
+\contentsline {subsubsection}{\numberline {5.0.3}Implementierung}{8}{subsubsection.5.0.3}
+\contentsline {section}{\numberline {6}Schluss}{8}{section.6}
+\contentsline {section}{\numberline {7}Literaturverzeichnis}{10}{section.7}
